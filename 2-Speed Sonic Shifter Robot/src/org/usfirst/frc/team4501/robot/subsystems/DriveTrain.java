@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
 import org.usfirst.frc.team4501.robot.RobotMap;
-import org.usfirst.frc.team4501.robot.commands.DriveIdle;
+import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -39,7 +39,7 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initDefaultCommand(){
-    	setDefaultCommand(new DriveIdle());
+    	setDefaultCommand(new DriveArcade());
     }
     
     public void arcadeDrive(double forward, double rotate){
