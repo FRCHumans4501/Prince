@@ -5,6 +5,8 @@ import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,17 +24,21 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
     Command autonomousCommand;
-
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
     
     // Subsystems
     public static final DriveTrain driveTrain = new DriveTrain();
     
+    public static Gyro gyro;
+    
+    public static Encoder encoder;
+    
     public void robotInit() {
 		oi = new OI();
+		gyro = new Gyro(RobotMap.GYRO);
+		
+		
+		
+		
         // instantiate the command used for the autonomous period
     }
 	
@@ -41,8 +47,16 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+       
+    	gyro.reset();
+    	
+    	
+		//driveTrain.resetEncoders();
+    	
+    	// schedule the autonomous command (example)
+        if (autonomousCommand != null) {
+        	autonomousCommand.start();
+        }
     }
 
     /**
@@ -59,6 +73,9 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         
+        
+        gyro.reset();
+        
         Scheduler.getInstance().add(new DriveArcade());
     }
 
@@ -67,13 +84,17 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
+    	gyro.reset();
+    	
     	Scheduler.getInstance().add(new DriveIdle());
+    	
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	DriveTrain.update();
         Scheduler.getInstance().run();
     }
     

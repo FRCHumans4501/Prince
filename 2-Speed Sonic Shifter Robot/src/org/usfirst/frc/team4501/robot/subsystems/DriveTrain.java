@@ -1,13 +1,17 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
+import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -24,7 +28,8 @@ public class DriveTrain extends Subsystem {
 	Talon leftTalon;
 	
 	DoubleSolenoid shifter;
-	ShifterState state;
+	ShifterState state; 
+	
 	
     
     // Put methods for controlling this subsystem
@@ -36,6 +41,9 @@ public class DriveTrain extends Subsystem {
 		
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
+		
+		
+		
     }
     
     public void initDefaultCommand(){
@@ -44,6 +52,13 @@ public class DriveTrain extends Subsystem {
     
     public void arcadeDrive(double forward, double rotate){
     	drive.arcadeDrive(forward, rotate);
+    }
+    
+    public static void update(){
+    	SmartDashboard.putNumber("Gyro Angle", Robot.gyro.getAngle());
+    	SmartDashboard.putNumber("Encoder Angle",Robot.encoder.getDistance());
+    	
+    	
     }
     
     public void highGear() {
@@ -70,5 +85,8 @@ public class DriveTrain extends Subsystem {
     public ShifterState getState() {
     	return state;
     }
+    
+ 
+    
 }
 

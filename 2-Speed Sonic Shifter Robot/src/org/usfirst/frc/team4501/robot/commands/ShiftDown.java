@@ -12,6 +12,7 @@ public class ShiftDown extends Command {
     public ShiftDown() {
     	requires(Robot.driveTrain);
     }
+   
 
     // Called just before this Command runs the first time
     protected void initialize() {
@@ -24,7 +25,7 @@ public class ShiftDown extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

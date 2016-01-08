@@ -23,6 +23,11 @@ public class OI {
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 	}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+	
+	
+	
+	
 	
 	public double getX() {
 		return joystick.getX(Hand.kLeft);
