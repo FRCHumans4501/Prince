@@ -11,9 +11,15 @@ public class RobotMap {
 	
 	public static final int SOLENOID_HIGHGEAR = 0, SOLENOID_LOWGEAR = 1;
 	
-	public static final int GYRO = 5;
+	public static final int GYRO = 0;
 	
-	public static final int ENCODER=2;
+	public static class Encoders {
+		public static final int 
+				ENCODER_RL_A = 2, ENCODER_RL_B = 3, // Rear Left
+				ENCODER_RR_A = 4, ENCODER_RR_B = 5, // Rear Right
+				ENCODER_FL_A = 6, ENCODER_FL_B = 7, // Front Left
+				ENCODER_FR_A = 8, ENCODER_FR_B = 9; // Front Right
+	}
 	
 	
     // For example to map the left and right motors, you could define the

@@ -28,13 +28,8 @@ public class Robot extends IterativeRobot {
     // Subsystems
     public static final DriveTrain driveTrain = new DriveTrain();
     
-    public static Gyro gyro;
-    
-    public static Encoder encoder;
-    
     public void robotInit() {
 		oi = new OI();
-		gyro = new Gyro(RobotMap.GYRO);
 		
 		
 		
@@ -47,8 +42,6 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-       
-    	gyro.reset();
     	
     	
 		//driveTrain.resetEncoders();
@@ -73,9 +66,6 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         
-        
-        gyro.reset();
-        
         Scheduler.getInstance().add(new DriveArcade());
     }
 
@@ -84,7 +74,6 @@ public class Robot extends IterativeRobot {
      * You can use it to reset subsystems before shutting down.
      */
     public void disabledInit(){
-    	gyro.reset();
     	
     	Scheduler.getInstance().add(new DriveIdle());
     	
@@ -94,7 +83,6 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	DriveTrain.update();
         Scheduler.getInstance().run();
     }
     

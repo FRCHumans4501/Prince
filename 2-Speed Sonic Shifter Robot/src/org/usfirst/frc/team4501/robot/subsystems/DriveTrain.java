@@ -3,11 +3,11 @@ package org.usfirst.frc.team4501.robot.subsystems;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
-
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,6 +30,11 @@ public class DriveTrain extends Subsystem {
 	DoubleSolenoid shifter;
 	ShifterState state; 
 	
+	Gyro gyro;
+	Encoder RL_Encoder;
+	Encoder RR_Encoder;
+	Encoder FL_Encoder;
+	Encoder FR_Encoder;
 	
     
     // Put methods for controlling this subsystem
@@ -42,6 +47,7 @@ public class DriveTrain extends Subsystem {
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
 		
+		this.gyro = new Gyro(RobotMap.GYRO);
 		
 		
     }
@@ -54,11 +60,21 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(forward, rotate);
     }
     
-    public static void update(){
-    	SmartDashboard.putNumber("Gyro Angle", Robot.gyro.getAngle());
-    	SmartDashboard.putNumber("Encoder Angle",Robot.encoder.getDistance());
-    	
-    	
+    public void gyroInit(/*double gSensitivity*/){
+    	gyro.initGyro();
+    	gyro.reset();
+    	//gyro.setSensitivity(gSensitivity); //volts Per Degree Per Second
+    }
+    
+    public void gyroReset(){
+    	gyro.reset();
+    }
+    
+
+    public void sensorUpdate(){
+    	SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+    	SmartDashboard.getNumber("Gyro Rate", gyro.getRate());
+    	//SmartDashboard.putNumber("Encoder Angle",Robot.encoder.getDistance());
     }
     
     public void highGear() {
