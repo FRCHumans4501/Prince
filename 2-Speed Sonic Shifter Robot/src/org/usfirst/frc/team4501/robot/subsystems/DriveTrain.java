@@ -1,13 +1,12 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
-import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -30,11 +29,9 @@ public class DriveTrain extends Subsystem {
 	DoubleSolenoid shifter;
 	ShifterState state; 
 	
-	Gyro gyro;
-	Encoder RL_Encoder;
-	Encoder RR_Encoder;
-	Encoder FL_Encoder;
-	Encoder FR_Encoder;
+	AnalogGyro gyro;
+	Encoder L_Encoder;
+	Encoder R_Encoder;
 	
     
     // Put methods for controlling this subsystem
@@ -47,9 +44,10 @@ public class DriveTrain extends Subsystem {
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
 		
-		this.gyro = new Gyro(RobotMap.GYRO);
+		this.gyro = new AnalogGyro(RobotMap.GYRO);
 		
-		
+		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
+		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
     }
     
     public void initDefaultCommand(){
@@ -60,21 +58,26 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(forward, rotate);
     }
     
-    public void gyroInit(/*double gSensitivity*/){
+    public void initGyro(/*double gSensitivity*/){
     	gyro.initGyro();
     	gyro.reset();
     	//gyro.setSensitivity(gSensitivity); //volts Per Degree Per Second
     }
     
-    public void gyroReset(){
+    public void sensorReset(){
     	gyro.reset();
+    	L_Encoder.reset();
+    	R_Encoder.reset();
     }
     
 
-    public void sensorUpdate(){
+    public void getSensors(){
     	SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
     	SmartDashboard.getNumber("Gyro Rate", gyro.getRate());
-    	//SmartDashboard.putNumber("Encoder Angle",Robot.encoder.getDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance", this.R_Encoder.getDistance());
+    	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
+    	SmartDashboard.putNumber("Right Encoder Rate", this.R_Encoder.getRate());
+    	SmartDashboard.putNumber("Left Encoder Rate", this.L_Encoder.getRate());
     }
     
     public void highGear() {

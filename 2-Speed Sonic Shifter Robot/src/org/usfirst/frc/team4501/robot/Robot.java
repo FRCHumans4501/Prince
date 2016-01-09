@@ -5,8 +5,6 @@ import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -31,10 +29,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		
-		
-		
-		
-        // instantiate the command used for the autonomous period
+		driveTrain.initGyro();
     }
 	
 	public void disabledPeriodic() {
@@ -42,7 +37,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-    	
+    	driveTrain.sensorReset();
     	
 		//driveTrain.resetEncoders();
     	
@@ -66,6 +61,8 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         
+        driveTrain.sensorReset();
+        
         Scheduler.getInstance().add(new DriveArcade());
     }
 
@@ -83,6 +80,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	driveTrain.getSensors();
         Scheduler.getInstance().run();
     }
     

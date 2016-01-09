@@ -15,10 +15,8 @@ public class RobotMap {
 	
 	public static class Encoders {
 		public static final int 
-				ENCODER_RL_A = 2, ENCODER_RL_B = 3, // Rear Left
-				ENCODER_RR_A = 4, ENCODER_RR_B = 5, // Rear Right
-				ENCODER_FL_A = 6, ENCODER_FL_B = 7, // Front Left
-				ENCODER_FR_A = 8, ENCODER_FR_B = 9; // Front Right
+				L_A = 2, L_B = 3, // Left
+				R_A = 4, R_B = 5; // Right
 	}
 	
 	
