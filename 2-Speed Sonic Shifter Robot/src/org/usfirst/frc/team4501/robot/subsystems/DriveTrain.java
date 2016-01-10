@@ -33,6 +33,8 @@ public class DriveTrain extends Subsystem {
 	Encoder L_Encoder;
 	Encoder R_Encoder;
 	
+	double x;
+	
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -48,6 +50,8 @@ public class DriveTrain extends Subsystem {
 		
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
+		
+		x=5;
     }
     
     public void initDefaultCommand(){
@@ -105,7 +109,17 @@ public class DriveTrain extends Subsystem {
     	return state;
     }
     
- 
+    public void forwardMove(){
+    	this.leftTalon.set(x);
+    	this.rightTalon.set(x);
+    	
+    }
+    
+  
     
 }
+    
+ 
+    
+
 

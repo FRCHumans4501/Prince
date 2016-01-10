@@ -23,6 +23,8 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     
+    DriveTrain drive;
+    
     // Subsystems
     public static final DriveTrain driveTrain = new DriveTrain();
     
@@ -38,13 +40,17 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	driveTrain.sensorReset();
-    	
+    	driveTrain.forwardMove();
 		//driveTrain.resetEncoders();
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
         	autonomousCommand.start();
+        	
+        	
         }
+        
+      
     }
 
     /**
@@ -52,6 +58,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        driveTrain.forwardMove();
+        
     }
 
     public void teleopInit() {
