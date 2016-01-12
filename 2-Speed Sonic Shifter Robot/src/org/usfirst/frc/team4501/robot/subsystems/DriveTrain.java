@@ -33,12 +33,8 @@ public class DriveTrain extends Subsystem {
 	Encoder L_Encoder;
 	Encoder R_Encoder;
 	
-<<<<<<< HEAD
 	double x;
 	double y;
-=======
-	
->>>>>>> origin/Auto-Beta
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -55,11 +51,8 @@ public class DriveTrain extends Subsystem {
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 		
-<<<<<<< HEAD
 		x=0.5;
 		y=-0.5;
-=======
->>>>>>> origin/Auto-Beta
     }
     
     public void initDefaultCommand(){
