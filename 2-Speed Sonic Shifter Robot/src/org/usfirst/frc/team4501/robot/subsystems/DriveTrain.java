@@ -58,10 +58,10 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(forward, rotate);
     }
     
-    public void initGyro(/*double gSensitivity*/){
+    public void initGyro(double gSensitivity){
     	gyro.initGyro();
     	gyro.reset();
-    	//gyro.setSensitivity(gSensitivity); //volts Per Degree Per Second
+    	gyro.setSensitivity(gSensitivity); //volts Per Degree Per Second
     }
     
     public void sensorReset(){
@@ -72,7 +72,8 @@ public class DriveTrain extends Subsystem {
     
 
     public void getSensors(){
-    	SmartDashboard.putNumber("Gyro Angle", gyro.getAngle());
+    	long gyroAngle = Math.round(gyro.getAngle());
+    	SmartDashboard.putNumber("Gyro Angle", gyroAngle);
     	SmartDashboard.getNumber("Gyro Rate", gyro.getRate());
     	SmartDashboard.putNumber("Right Encoder Distance", this.R_Encoder.getDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());

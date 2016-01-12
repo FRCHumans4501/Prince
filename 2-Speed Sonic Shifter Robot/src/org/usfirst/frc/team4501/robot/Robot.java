@@ -29,7 +29,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
 		
-		driveTrain.initGyro();
+		driveTrain.initGyro(.0069);
     }
 	
 	public void disabledPeriodic() {
@@ -38,8 +38,6 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	driveTrain.sensorReset();
-    	
-		//driveTrain.resetEncoders();
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
