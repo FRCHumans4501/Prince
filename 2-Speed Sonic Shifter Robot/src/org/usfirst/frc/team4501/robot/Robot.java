@@ -1,6 +1,7 @@
 
 package org.usfirst.frc.team4501.robot;
 
+
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
@@ -40,8 +41,6 @@ public class Robot extends IterativeRobot {
 
     public void autonomousInit() {
     	driveTrain.sensorReset();
-    	driveTrain.forwardMove();
-		//driveTrain.resetEncoders();
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) {
@@ -58,7 +57,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        driveTrain.forwardMove();
+        driveTrain.forwardMove(0.05, 0.05);
         
     }
 
