@@ -106,7 +106,18 @@ public class DriveTrain extends Subsystem {
     	return state;
     }
     
- 
+    public void forwardMove(double x, double y){
+    	this.leftTalon.set(x);
+    	this.rightTalon.set(y);
+    	
+    }
+    
+       
+  
     
 }
+    
+ 
+    
+
 
