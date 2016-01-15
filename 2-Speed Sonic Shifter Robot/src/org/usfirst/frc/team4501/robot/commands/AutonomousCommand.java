@@ -5,6 +5,8 @@ import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.WaitUntilCommand;
 
 /**
  *
@@ -16,27 +18,14 @@ public class AutonomousCommand extends CommandGroup {
 		requires(Robot.driveTrain);
 		driveTrain = Robot.driveTrain;
 		// Add Commands here:
-		
 		//Actual Auto Command(Doesn't work)
-		//addSequential(new DriveForward4Time(5.0, 10.0));
-		
-		//Test Auto Command to See if it triggers
-		addSequential(new ShiftUp());
-		Timer.delay(2);
+		addSequential(new WaitCommand(3));
+		addSequential(new DriveForward4Time(.5, 10.0));
+		addSequential(new WaitCommand(3));
 		addSequential(new ShiftDown());
-		Timer.delay(2);
+		addSequential(new WaitCommand(3));
 		addSequential(new ShiftUp());
-		Timer.delay(2);
-		addSequential(new ShiftDown());
-		Timer.delay(2);
-		addSequential(new ShiftUp());
-		Timer.delay(2);
-		addSequential(new ShiftDown());
-		Timer.delay(2);
-		addSequential(new ShiftUp());
-		Timer.delay(2);
-		addSequential(new ShiftDown());
-		Timer.delay(2);
+	
 		// e.g. addSequential(new Command1());
 		// addSequential(new Command2());
 		// these will run in order.

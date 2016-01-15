@@ -5,6 +5,7 @@ import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -16,10 +17,11 @@ public class DriveForward4Time extends Command {
 	double speed;
 	double runTime;
 	boolean finished = false;
-    public DriveForward4Time(double speed, double time) {
+    public DriveForward4Time(double xspeed, double time) {
     	requires(Robot.driveTrain);
     	driveTrain = Robot.driveTrain;
     	
+    	this.speed = xspeed;
     	timer = new Timer();
     	this.runTime = time;
         
@@ -34,17 +36,18 @@ public class DriveForward4Time extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveTrain.arcadeDrive(this.speed, 0);
+    	SmartDashboard.putNumber("Run Time", timer.get());
+    	driveTrain.arcadeDrive(-speed, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         double currentTime = timer.get();
         
-        if (runTime > currentTime) {
-        	return false;
-        } else {
+        if (this.runTime <= currentTime) {
         	return true;
+        } else {
+        	return false;
         }
     }
 
