@@ -1,8 +1,9 @@
 
 package org.usfirst.frc.team4501.robot;
 
-
+import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
+import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
@@ -22,79 +23,77 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
-    Command autonomousCommand;
-    
-    DriveTrain drive;
-    
-    // Subsystems
-    public static final DriveTrain driveTrain = new DriveTrain();
-    
-    public void robotInit() {
+	Command autonomousCommand;
+
+	DriveTrain drive;
+
+	// Subsystems
+	public static final DriveTrain driveTrain = new DriveTrain();
+
+	public void robotInit() {
 		oi = new OI();
-		
+
 		driveTrain.initGyro(.0069);
-    }
-	
+		autonomousCommand = new AutonomousCommand();
+	}
+
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
 
-    public void autonomousInit() {
-    	driveTrain.sensorReset();
-    	
-    	// schedule the autonomous command (example)
-        if (autonomousCommand != null) {
-        	autonomousCommand.start();
-        	
-        	
-        }
-        
-      
-    }
+	public void autonomousInit() {
+		driveTrain.sensorReset();
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
-        driveTrain.forwardMove(0.05, 0.05);
-        
-    }
+		// schedule the autonomous command (example)
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
+		}
+	}
 
-    public void teleopInit() {
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		Scheduler.getInstance().run();
+
+	}
+
+	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        if (autonomousCommand != null) autonomousCommand.cancel();
-        
-        driveTrain.sensorReset();
-        
-        Scheduler.getInstance().add(new DriveArcade());
-    }
+		// teleop starts running. If you want the autonomous to
+		// continue until interrupted by another command, remove
+		// this line or comment it out.
 
-    /**
-     * This function is called when the disabled button is hit.
-     * You can use it to reset subsystems before shutting down.
-     */
-    public void disabledInit(){
-    	
-    	Scheduler.getInstance().add(new DriveIdle());
-    	
-    }
+		if (autonomousCommand != null)
+			autonomousCommand.cancel();
 
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-    	driveTrain.getSensors();
-        Scheduler.getInstance().run();
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-        LiveWindow.run();
-    }
+		driveTrain.sensorReset();
+
+		Scheduler.getInstance().add(new DriveArcade());
+	}
+
+	/**
+	 * This function is called when the disabled button is hit. You can use it
+	 * to reset subsystems before shutting down.
+	 */
+	public void disabledInit() {
+
+		Scheduler.getInstance().add(new DriveIdle());
+
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		driveTrain.getSensors();
+		Scheduler.getInstance().run();
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
 }

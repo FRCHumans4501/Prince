@@ -74,7 +74,7 @@ public class DriveTrain extends Subsystem {
     public void getSensors(){
     	long gyroAngle = Math.round(gyro.getAngle());
     	SmartDashboard.putNumber("Gyro Angle", gyroAngle);
-    	SmartDashboard.getNumber("Gyro Rate", gyro.getRate());
+    	SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
     	SmartDashboard.putNumber("Right Encoder Distance", this.R_Encoder.getDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
     	SmartDashboard.putNumber("Right Encoder Rate", this.R_Encoder.getRate());
@@ -105,15 +105,6 @@ public class DriveTrain extends Subsystem {
     public ShifterState getState() {
     	return state;
     }
-    
-    public void forwardMove(double x, double y){
-    	this.leftTalon.set(x);
-    	this.rightTalon.set(y);
-    	
-    }
-    
-       
-  
     
 }
     
