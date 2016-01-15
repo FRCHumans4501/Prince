@@ -18,6 +18,7 @@ public class OI {
 	Button shiftHigh = new JoystickButton(joystick, 1);
 	Button shiftLow = new JoystickButton(joystick, 2);
 	Button AutoTest = new JoystickButton(joystick, 4);
+	
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
