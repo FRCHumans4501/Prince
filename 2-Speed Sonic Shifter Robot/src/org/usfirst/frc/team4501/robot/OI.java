@@ -13,27 +13,43 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	Joystick joystick = new Joystick(0);
+	Joystick xBoxController = new Joystick(0);
+	Joystick shooter = new Joystick(1);
 	
-	Button shiftHigh = new JoystickButton(joystick, 1);
-	Button shiftLow = new JoystickButton(joystick, 2);
-	Button AutoTest = new JoystickButton(joystick, 4);
+	Button shiftHigh = new JoystickButton(xBoxController, 1);
+	Button shiftLow = new JoystickButton(xBoxController, 2);
+	Button AutoTest = new JoystickButton(xBoxController, 4);
+	//Button ShooterStart = new JoystickButton(shooter, 1);
 	
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 		AutoTest.whenPressed(new AutonomousCommand());
+		//ShooterStart.whenPressed(new ShooterArcade());
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	
-	public double getX() {
-		return joystick.getX(Hand.kLeft);
+	public double getXboxX() {
+		return xBoxController.getX(Hand.kLeft);
 	}
 	
-	public double getY() {
-		return joystick.getY(Hand.kLeft);
+	public double getXboxY() {
+		return xBoxController.getY(Hand.kLeft);
 	}
+	
+	public double getShooterX() {
+		return shooter.getX();
+	}
+	
+	public double getShooterY() {
+		return shooter.getY();
+	}
+	
+	public double getShooterThrottle() {
+		return shooter.getZ();
+	}
+	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button

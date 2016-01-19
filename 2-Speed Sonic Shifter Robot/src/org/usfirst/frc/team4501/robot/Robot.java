@@ -6,11 +6,15 @@ import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -26,15 +30,40 @@ public class Robot extends IterativeRobot {
 	Command autonomousCommand;
 
 	DriveTrain drive;
+	CameraServer server;
+	NetworkTable table;
+
+	public Robot() {
+		server = CameraServer.getInstance();
+		server.setQuality(50);
+		// the camera name (ex "cam0") can be found through the roborio web
+		// interface
+		server.startAutomaticCapture("cam0");
+		table = NetworkTable.getTable("GRIP/myContorsReport");
+	}
+
+	/**
+	 * start up automatic capture you should see the video stream from the
+	 * webcam in your FRC PC Dashboard.
+	 */
+	public void operatorControl() {
+
+		while (isOperatorControl() && isEnabled()) {
+			/** robot code here! **/
+			Timer.delay(0.005); // wait for a motor update time
+		}
+	}
 
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final Shooter shooter = new Shooter();
 
 	public void robotInit() {
 		oi = new OI();
 
 		driveTrain.initGyro(.0069);
 		autonomousCommand = new AutonomousCommand();
+		
 	}
 
 	public void disabledPeriodic() {

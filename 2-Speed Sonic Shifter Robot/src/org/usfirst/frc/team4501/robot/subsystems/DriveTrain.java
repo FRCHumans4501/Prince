@@ -23,6 +23,8 @@ public class DriveTrain extends Subsystem {
 	
 	RobotDrive drive;
 	
+	
+	
 	Talon rightTalon;
 	Talon leftTalon;
 	
@@ -32,7 +34,7 @@ public class DriveTrain extends Subsystem {
 	AnalogGyro gyro;
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-	
+		
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -48,6 +50,8 @@ public class DriveTrain extends Subsystem {
 		
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
+		
+	
     }
     
     public void initDefaultCommand(){
@@ -105,6 +109,8 @@ public class DriveTrain extends Subsystem {
     public ShifterState getState() {
     	return state;
     }
+    
+   
     
 }
     

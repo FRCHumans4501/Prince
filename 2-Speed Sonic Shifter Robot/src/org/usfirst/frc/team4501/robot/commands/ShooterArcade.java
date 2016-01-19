@@ -2,21 +2,20 @@ package org.usfirst.frc.team4501.robot.commands;
 
 import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
-import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveArcade extends Command {
-	DriveTrain driveTrain;
-	OI oi;
+public class ShooterArcade extends Command {
 
-    public DriveArcade() {
-    	requires(Robot.driveTrain);
-    	
-    	driveTrain = Robot.driveTrain;
+	Shooter shooter;
+	OI oi;
+    public ShooterArcade() {
+    	requires(Robot.shooter);
+    	shooter = Robot.shooter;
     	oi = Robot.oi;
     }
 
@@ -26,9 +25,8 @@ public class DriveArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double rotate = oi.getXboxX();
-    	double forward = oi.getXboxY();
-    	driveTrain.arcadeDrive(forward, rotate);
+    	double speed = oi.getShooterThrottle();
+    	shooter.shooterArcade(speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
