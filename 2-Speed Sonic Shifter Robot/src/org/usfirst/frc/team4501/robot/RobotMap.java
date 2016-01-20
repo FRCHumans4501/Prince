@@ -16,7 +16,7 @@ public class RobotMap {
 
 	public static class Encoders {
 		public static final int L_A = 2, L_B = 3, // Left
-				R_A = 4, R_B = 5; // Right
+				R_A = 0, R_B = 1; // Right
 	}
 
 	// For example to map the left and right motors, you could define the

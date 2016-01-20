@@ -32,7 +32,13 @@ public class Robot extends IterativeRobot {
 	DriveTrain drive;
 	CameraServer server;
 	NetworkTable table;
-
+	
+	private final static String[] GRIP_ARGS = new String[]{
+			"/usr/local/frc/JRE/bin/java", "-jar",
+	        "/home/lvuser/grip.jar", "/home/lvuser/project.grip"};
+	
+	private final NetworkTable grip = NetworkTable.getTable("grip");
+	
 	public Robot() {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
@@ -64,7 +70,17 @@ public class Robot extends IterativeRobot {
 		driveTrain.initGyro(.0069);
 		autonomousCommand = new AutonomousCommand();
 		
-	}
+		/*
+		 *  Vision Stuff had errors so I had to disable
+		 try {
+	            Runtime.getRuntime().exec(GRIP_ARGS);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        */
+	    }
+		
+	
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -84,9 +100,14 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		 /* Get published values from GRIP using NetworkTables */
+        for (double area : grip.getNumberArray("targets/area", new double[0])) {
+            System.out.println("Got contour with area=" + area);
+        }
+    }
 
-	}
 
+	
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to

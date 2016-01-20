@@ -79,10 +79,11 @@ public class DriveTrain extends Subsystem {
     	long gyroAngle = Math.round(gyro.getAngle());
     	SmartDashboard.putNumber("Gyro Angle", gyroAngle);
     	SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
-    	SmartDashboard.putNumber("Right Encoder Distance", this.R_Encoder.getDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance", -this.R_Encoder.getDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
-    	SmartDashboard.putNumber("Right Encoder Rate", this.R_Encoder.getRate());
+    	SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());
     	SmartDashboard.putNumber("Left Encoder Rate", this.L_Encoder.getRate());
+    	SmartDashboard.putNumber("Right Rotations", (-this.R_Encoder.getDistance()/2085));
     }
     
     public void highGear() {
