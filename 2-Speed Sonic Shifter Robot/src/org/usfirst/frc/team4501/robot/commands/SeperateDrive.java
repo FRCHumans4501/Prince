@@ -1,20 +1,24 @@
 package org.usfirst.frc.team4501.robot.commands;
 
+import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class DriveIdle extends Command {
-	
+public class SeperateDrive extends Command {
+	OI oi;
 	DriveTrain driveTrain;
 
-    public DriveIdle() {
-    	requires(Robot.driveTrain);
+    public SeperateDrive() {
+    	requires(driveTrain);
+    
+   
     	
-    	driveTrain = Robot.driveTrain;
+    	oi = Robot.oi;
     }
 
     // Called just before this Command runs the first time
@@ -23,7 +27,10 @@ public class DriveIdle extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	driveTrain.arcadeDrive(0, 0);
+    	double rSpeed = oi.getXboxY();
+    	double lSpeed = oi.getXboxY2();
+    	driveTrain.seperateDrive(rSpeed, lSpeed);  	
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

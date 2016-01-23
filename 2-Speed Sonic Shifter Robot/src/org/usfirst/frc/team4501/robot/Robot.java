@@ -5,6 +5,7 @@ import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
+import org.usfirst.frc.team4501.robot.commands.SeperateDrive;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
@@ -27,11 +28,15 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
+
 	Command autonomousCommand;
 
 	DriveTrain drive;
 	CameraServer server;
 	NetworkTable table;
+	
+	double rSpeed;
+	double lSpeed;
 	
 	private final static String[] GRIP_ARGS = new String[]{
 			"/usr/local/frc/JRE/bin/java", "-jar",
@@ -54,8 +59,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void operatorControl() {
 
-		while (isOperatorControl() && isEnabled()) {
-			/** robot code here! **/
+	//	while (isOperatorControl() && isEnabled()) {
+			/** robot code here! ** 
 			Timer.delay(0.005); // wait for a motor update time
 		}
 	}
@@ -87,7 +92,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		driveTrain.sensorReset();
+		drive.sensorReset();
 
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
@@ -117,9 +122,9 @@ public class Robot extends IterativeRobot {
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
-		driveTrain.sensorReset();
+		drive.sensorReset();
 
-		Scheduler.getInstance().add(new DriveArcade());
+		Scheduler.getInstance().add(new SeperateDrive());
 	}
 
 	/**
@@ -136,7 +141,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		driveTrain.getSensors();
+		drive.getSensors();
+		drive.seperateDrive(rSpeed, lSpeed);
 		Scheduler.getInstance().run();
 	}
 

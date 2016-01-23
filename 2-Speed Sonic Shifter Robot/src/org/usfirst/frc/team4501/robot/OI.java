@@ -14,7 +14,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	Joystick xBoxController = new Joystick(0);
-	Joystick shooter = new Joystick(1);
+	Joystick xBoxController2=new Joystick(4);
+	//Joystick shooter = new Joystick();
 	
 	Button shiftHigh = new JoystickButton(xBoxController, 1);
 	Button shiftLow = new JoystickButton(xBoxController, 2);
@@ -38,17 +39,38 @@ public class OI {
 		return xBoxController.getY(Hand.kLeft);
 	}
 	
-	public double getShooterX() {
-		return shooter.getX();
+	public double getXboxX2(){
+		return xBoxController.getX(Hand.kRight);
 	}
 	
-	public double getShooterY() {
-		return shooter.getY();
+	public double getXboxY2(){
+		return xBoxController2.getY(Hand.kRight);
 	}
 	
-	public double getShooterThrottle() {
-		return shooter.getZ();
+	/*
+	public double getRightXboxX(){
+		return xBoxController.getX(Hand.kRight);
 	}
+	
+	public double getRightXboxY(){
+		return xBoxController.getY(Hand.kRight);
+	}
+	*/
+	//public double getShooterX() {
+		//return shooter.getX();
+		/*
+		 Hey Simo BBY :P
+
+		 */
+	}
+	
+	//public double getShooterY() {
+		//return shooter.getY();
+	//}
+	
+	//public double getShooterThrottle() {
+		//return shooter.getZ();
+	//}
 	
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

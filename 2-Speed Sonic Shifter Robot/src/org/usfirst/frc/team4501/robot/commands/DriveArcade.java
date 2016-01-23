@@ -26,9 +26,9 @@ public class DriveArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double rotate = oi.getXboxX();
-    	double forward = oi.getXboxY();
-    	driveTrain.arcadeDrive(forward, rotate);
+    	//double rotate = oi.getLeftXboxX();
+    	//double forward = oi.getLeftXboxY();
+    	//driveTrain.arcadeDrive(forward, rotate);
     }
 
     // Make this return true when this Command no longer needs to run execute()

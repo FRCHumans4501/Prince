@@ -2,6 +2,7 @@ package org.usfirst.frc.team4501.robot.subsystems;
 
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
+import org.usfirst.frc.team4501.robot.commands.SeperateDrive;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -55,11 +56,17 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initDefaultCommand(){
-    	setDefaultCommand(new DriveArcade());
+    	//setDefaultCommand(new DriveArcade());
+    	setDefaultCommand(new SeperateDrive());
     }
     
     public void arcadeDrive(double forward, double rotate){
     	drive.arcadeDrive(forward, rotate);
+    }
+    
+    public void seperateDrive(double rSpeed, double lSpeed){
+    	rightTalon.set(rSpeed);
+    	leftTalon.set(lSpeed);
     }
     
     public void initGyro(double gSensitivity){
