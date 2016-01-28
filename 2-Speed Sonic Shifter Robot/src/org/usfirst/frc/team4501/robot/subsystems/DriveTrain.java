@@ -3,7 +3,8 @@ package org.usfirst.frc.team4501.robot.subsystems;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.ADXL362;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
@@ -31,10 +32,11 @@ public class DriveTrain extends Subsystem {
 	DoubleSolenoid shifter;
 	ShifterState state; 
 	
-	AnalogGyro gyro;
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-		
+	ADXL362 rioAccel;
+	ADXRS450_Gyro rioGyro;
+	
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -46,7 +48,7 @@ public class DriveTrain extends Subsystem {
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
 		
-		this.gyro = new AnalogGyro(RobotMap.GYRO);
+		this.rioGyro = new ADXRS450_Gyro();
 		
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
@@ -62,23 +64,22 @@ public class DriveTrain extends Subsystem {
     	drive.arcadeDrive(forward, rotate);
     }
     
-    public void initGyro(double gSensitivity){
-    	gyro.initGyro();
-    	gyro.reset();
-    	gyro.setSensitivity(gSensitivity); //volts Per Degree Per Second
+    public void initGyro(){
+    	rioGyro.calibrate();
+    	rioGyro.reset();
     }
     
     public void sensorReset(){
-    	gyro.reset();
+    	rioGyro.reset();
     	L_Encoder.reset();
     	R_Encoder.reset();
     }
     
 
     public void getSensors(){
-    	long gyroAngle = Math.round(gyro.getAngle());
+    	long gyroAngle = Math.round(rioGyro.getAngle());
     	SmartDashboard.putNumber("Gyro Angle", gyroAngle);
-    	SmartDashboard.putNumber("Gyro Rate", gyro.getRate());
+    	SmartDashboard.putNumber("Gyro Rate", rioGyro.getRate());
     	SmartDashboard.putNumber("Right Encoder Distance", -this.R_Encoder.getDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
     	SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());

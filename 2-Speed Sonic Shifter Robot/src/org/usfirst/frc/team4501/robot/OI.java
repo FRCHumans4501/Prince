@@ -19,14 +19,13 @@ public class OI {
 	Button shiftHigh = new JoystickButton(xBoxController, 1);
 	Button shiftLow = new JoystickButton(xBoxController, 2);
 	Button AutoTest = new JoystickButton(xBoxController, 4);
-	//Button ShooterStart = new JoystickButton(shooter, 3);
 	
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 		AutoTest.whenPressed(new AutonomousCommand());
-		//ShooterStart.whenPressed(new ShooterArcade());
+		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	

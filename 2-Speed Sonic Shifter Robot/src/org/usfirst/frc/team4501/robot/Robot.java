@@ -1,9 +1,7 @@
-
 package org.usfirst.frc.team4501.robot;
 
 import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
-import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
@@ -15,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+
+
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,7 +29,6 @@ public class Robot extends IterativeRobot {
 
 	Command autonomousCommand;
 
-	DriveTrain drive;
 	CameraServer server;
 	NetworkTable table;
 	
@@ -66,8 +65,9 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		oi = new OI();
+		
 
-		driveTrain.initGyro(.0069);
+		driveTrain.initGyro();
 		autonomousCommand = new AutonomousCommand();
 		
 		/*

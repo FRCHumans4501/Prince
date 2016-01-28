@@ -27,8 +27,8 @@ public class Shooter extends Subsystem {
         setDefaultCommand(new ShooterArcade());
     }
     
-    public void shooterArcade(double speed){
-    	shooter.arcadeDrive(speed, 0);
+    public void shooterArcade(double shooterSpeed){
+    	shooter.arcadeDrive(shooterSpeed, 0);
     }
 }
 

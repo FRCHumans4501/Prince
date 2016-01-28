@@ -15,7 +15,6 @@ public class DriveArcade extends Command {
 
     public DriveArcade() {
     	requires(Robot.driveTrain);
-    	
     	driveTrain = Robot.driveTrain;
     	oi = Robot.oi;
     }

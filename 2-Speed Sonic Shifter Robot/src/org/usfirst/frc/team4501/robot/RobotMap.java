@@ -12,8 +12,6 @@ public class RobotMap {
 
 	public static final int SOLENOID_HIGHGEAR = 0, SOLENOID_LOWGEAR = 1;
 
-	public static final int GYRO = 0;
-
 	public static class Encoders {
 		public static final int L_A = 2, L_B = 3, // Left
 				R_A = 0, R_B = 1; // Right

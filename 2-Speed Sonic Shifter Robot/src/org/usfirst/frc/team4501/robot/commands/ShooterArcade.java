@@ -10,9 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ShooterArcade extends Command {
-
-	Shooter shooter;
 	OI oi;
+	Shooter shooter;
     public ShooterArcade() {
     	requires(Robot.shooter);
     	shooter = Robot.shooter;
@@ -25,8 +24,8 @@ public class ShooterArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = oi.getShooterThrottle();
-    	shooter.shooterArcade(speed);
+    	double shooterSpeed = oi.getShooterThrottle();
+    	shooter.shooterArcade(shooterSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
