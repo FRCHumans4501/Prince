@@ -6,13 +6,11 @@ import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 
 
@@ -27,57 +25,22 @@ public class Robot extends IterativeRobot {
 
 	public static OI oi;
 
-	Command autonomousCommand;
-
-	CameraServer server;
-	NetworkTable table;
-	
-	private final static String[] GRIP_ARGS = new String[]{
-			"/usr/local/frc/JRE/bin/java", "-jar",
-	        "/home/lvuser/grip.jar", "/home/lvuser/project.grip"};
-	
-	private final NetworkTable grip = NetworkTable.getTable("grip");
-	
-	public Robot() {
-		server = CameraServer.getInstance();
-		server.setQuality(50);
-		// the camera name (ex "cam0") can be found through the roborio web
-		// interface
-		server.startAutomaticCapture("cam0");
-		table = NetworkTable.getTable("GRIP/myContorsReport");
-	}
-
-	/**
-	 * start up automatic capture you should see the video stream from the
-	 * webcam in your FRC PC Dashboard.
-	 */
-	public void operatorControl() {
-
-		while (isOperatorControl() && isEnabled()) {
-			/** robot code here! **/
-			Timer.delay(0.005); // wait for a motor update time
-		}
-	}
-
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
+	
+	Command autonomousCommand;
 
+    /**
+     * This function is run when the robot is first started up and should be
+     * used for any initialization code.
+     */
 	public void robotInit() {
 		oi = new OI();
 		
 
 		driveTrain.initGyro();
 		autonomousCommand = new AutonomousCommand();
-		
-		/*
-		 *  Vision Stuff had errors so I had to disable
-		 try {
-	            Runtime.getRuntime().exec(GRIP_ARGS);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	        */
 	    }
 		
 	
@@ -100,10 +63,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		 /* Get published values from GRIP using NetworkTables */
-        for (double area : grip.getNumberArray("targets/area", new double[0])) {
-            System.out.println("Got contour with area=" + area);
-        }
     }
 
 

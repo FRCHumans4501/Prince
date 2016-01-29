@@ -24,8 +24,6 @@ public class DriveTrain extends Subsystem {
 	
 	RobotDrive drive;
 	
-	
-	
 	Talon rightTalon;
 	Talon leftTalon;
 	

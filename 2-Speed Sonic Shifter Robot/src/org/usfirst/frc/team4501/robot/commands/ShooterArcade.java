@@ -25,6 +25,7 @@ public class ShooterArcade extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	double shooterSpeed = oi.getShooterThrottle();
+    	
     	shooter.shooterArcade(shooterSpeed);
     }
 
