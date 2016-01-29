@@ -26,7 +26,8 @@ public class OI {
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 		AutoTest.whenPressed(new AutonomousCommand());
-		ShooterStart.whileHeld(new ShooterArcade());
+		ShooterStart.whenPressed(new ShooterArcade());
+		ShooterStart.whenReleased(new ShooterIdle());
 		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
