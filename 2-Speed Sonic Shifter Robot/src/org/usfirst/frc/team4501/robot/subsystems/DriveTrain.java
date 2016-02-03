@@ -2,6 +2,8 @@ package org.usfirst.frc.team4501.robot.subsystems;
 
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
+import org.usfirst.frc.team4501.robot.commands.DriveIdle;
+import org.usfirst.frc.team4501.robot.commands.DriveTank;
 
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -23,8 +25,6 @@ public class DriveTrain extends Subsystem {
 	}
 	
 	RobotDrive drive;
-	
-	
 	
 	Talon rightTalon;
 	Talon leftTalon;
@@ -57,11 +57,15 @@ public class DriveTrain extends Subsystem {
     }
     
     public void initDefaultCommand(){
-    	setDefaultCommand(new DriveArcade());
+    	setDefaultCommand(new DriveIdle());
     }
     
     public void arcadeDrive(double forward, double rotate){
     	drive.arcadeDrive(forward, rotate);
+    }
+    
+    public void tankDrive(double leftValue, double rightValue){
+    	drive.tankDrive(leftValue, rightValue);
     }
     
     public void initGyro(){

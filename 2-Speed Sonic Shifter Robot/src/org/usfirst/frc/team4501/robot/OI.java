@@ -13,28 +13,37 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	Joystick xBoxController = new Joystick(0);
+	XboxController controller = new XboxController(0);
 	Joystick shooter = new Joystick(1);
 	
-	Button shiftHigh = new JoystickButton(xBoxController, 1);
-	Button shiftLow = new JoystickButton(xBoxController, 2);
-	Button AutoTest = new JoystickButton(xBoxController, 4);
+	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
+	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
+	Button ShooterStart = new JoystickButton(shooter, 1);
 	
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
-		AutoTest.whenPressed(new AutonomousCommand());
+		ShooterStart.whenPressed(new ShooterArcade());
+		ShooterStart.whenReleased(new ShooterIdle());
 		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	
-	public double getXboxX() {
-		return xBoxController.getX(Hand.kLeft);
+	public double getLeftXboxX() {
+		return controller.getX(Hand.kLeft);
 	}
 	
-	public double getXboxY() {
-		return xBoxController.getY(Hand.kLeft);
+	public double getLeftXboxY() {
+		return controller.getY(Hand.kLeft);
+	}
+
+	public double getRightXboxX() {
+		return controller.getX(Hand.kRight);
+	}
+	
+	public double getRightXboxY() {
+		return controller.getY(Hand.kRight);
 	}
 	
 	public double getShooterX() {
