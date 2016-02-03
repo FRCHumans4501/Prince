@@ -9,11 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveArcade extends Command {
+public class DriveTank extends Command {
 	DriveTrain driveTrain;
 	OI oi;
-
-    public DriveArcade() {
+	
+    public DriveTank() {
     	requires(Robot.driveTrain);
     	driveTrain = Robot.driveTrain;
     	oi = Robot.oi;
@@ -25,9 +25,7 @@ public class DriveArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double rotate = oi.getLeftXboxX();
-    	double forward = oi.getLeftXboxY();
-    	driveTrain.arcadeDrive(forward, rotate);
+    	driveTrain.tankDrive(oi.getLeftXboxY(), oi.getRightXboxY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

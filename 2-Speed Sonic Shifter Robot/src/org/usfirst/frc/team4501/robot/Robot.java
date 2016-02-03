@@ -3,6 +3,7 @@ package org.usfirst.frc.team4501.robot;
 import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4501.robot.commands.DriveArcade;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
+import org.usfirst.frc.team4501.robot.commands.DriveTank;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
@@ -11,8 +12,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
-
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,22 +29,25 @@ public class Robot extends IterativeRobot {
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
-	
+
+	SendableChooser driveChooser;
 	Command autonomousCommand;
 
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
 	public void robotInit() {
 		oi = new OI();
-		
 
 		driveTrain.initGyro();
 		autonomousCommand = new AutonomousCommand();
-	    }
-		
-	
+
+		driveChooser = new SendableChooser();
+		driveChooser.addDefault("Arcade Drive", new DriveArcade());
+		driveChooser.addObject("Seperate Drive", new DriveTank());
+		SmartDashboard.putData("Drive Chooser", driveChooser);
+	}
 
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
@@ -63,10 +67,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-    }
+	}
 
-
-	
 	public void teleopInit() {
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
@@ -78,7 +80,8 @@ public class Robot extends IterativeRobot {
 
 		driveTrain.sensorReset();
 
-		Scheduler.getInstance().add(new DriveArcade());
+		Scheduler.getInstance().add((Command) driveChooser.getSelected());
+
 	}
 
 	/**
