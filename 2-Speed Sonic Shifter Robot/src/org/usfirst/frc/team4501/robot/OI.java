@@ -24,6 +24,8 @@ public class OI {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
+		
+		//Shooter
 		ShooterStart.whenPressed(new ShooterArcade());
 		ShooterStart.whenReleased(new ShooterIdle());
 		

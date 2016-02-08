@@ -1,9 +1,9 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
+import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
-import org.usfirst.frc.team4501.robot.commands.DriveArcade;
+import org.usfirst.frc.team4501.robot.commands.DriveController;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
-import org.usfirst.frc.team4501.robot.commands.DriveTank;
 
 import edu.wpi.first.wpilibj.ADXL362;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -55,9 +55,9 @@ public class DriveTrain extends Subsystem {
 		
 	
     }
-    
     public void initDefaultCommand(){
-    	setDefaultCommand(new DriveIdle());
+    	System.out.println("initDefaultCommand: Execute");
+    	setDefaultCommand(new DriveController());
     }
     
     public void arcadeDrive(double forward, double rotate){
@@ -67,7 +67,10 @@ public class DriveTrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue){
     	drive.tankDrive(leftValue, rightValue);
     }
-    
+    public void stopMotors(){
+    	leftTalon.set(0);
+    	rightTalon.set(0);
+    }
     public void initGyro(){
     	rioGyro.calibrate();
     	rioGyro.reset();

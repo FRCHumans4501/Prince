@@ -1,14 +1,13 @@
 package org.usfirst.frc.team4501.robot;
 
 import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
-import org.usfirst.frc.team4501.robot.commands.DriveArcade;
+import org.usfirst.frc.team4501.robot.commands.DriveController;
+import org.usfirst.frc.team4501.robot.commands.DriveController.DriveMode;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
-import org.usfirst.frc.team4501.robot.commands.DriveTank;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -23,7 +22,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
 	public static OI oi;
 
 	// Subsystems
@@ -41,11 +39,12 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 
 		driveTrain.initGyro();
+		System.out.println("robotInit");
 		autonomousCommand = new AutonomousCommand();
 
 		driveChooser = new SendableChooser();
-		driveChooser.addDefault("Arcade Drive", new DriveArcade());
-		driveChooser.addObject("Seperate Drive", new DriveTank());
+		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
+		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
 	}
 
@@ -79,9 +78,10 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		driveTrain.sensorReset();
-
-		Scheduler.getInstance().add((Command) driveChooser.getSelected());
-
+		
+		DriveController.driveMode = (DriveMode) driveChooser.getSelected();
+		System.out.println("Robot.teleopInit() mode = " + DriveController.driveMode);
+		new DriveController().start();
 	}
 
 	/**
@@ -89,9 +89,7 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
-
 		Scheduler.getInstance().add(new DriveIdle());
-
 	}
 
 	/**

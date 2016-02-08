@@ -9,11 +9,16 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveArcade extends Command {
+public class DriveController extends Command {
+	
+	public enum DriveMode{TANK, ARCADE};
+	
+	public static DriveMode driveMode;
+	
 	DriveTrain driveTrain;
 	OI oi;
-
-    public DriveArcade() {
+	
+    public DriveController() {
     	requires(Robot.driveTrain);
     	driveTrain = Robot.driveTrain;
     	oi = Robot.oi;
@@ -25,9 +30,20 @@ public class DriveArcade extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double rotate = oi.getLeftXboxX();
-    	double forward = oi.getLeftXboxY();
-    	driveTrain.arcadeDrive(forward, rotate);
+
+    	switch(driveMode){
+    	case ARCADE:
+        	double rotate = oi.getLeftXboxX();
+        	double forward = oi.getLeftXboxY();
+        	driveTrain.arcadeDrive(forward, rotate);
+        	break;
+        	
+    	case TANK:
+        	double leftForward = oi.getLeftXboxY();
+        	double rightForward = oi.getRightXboxY();
+    		driveTrain.tankDrive(leftForward, rightForward);
+    		break;
+    	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,5 +58,6 @@ public class DriveArcade extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("DriveController.interrupted()");
     }
 }
