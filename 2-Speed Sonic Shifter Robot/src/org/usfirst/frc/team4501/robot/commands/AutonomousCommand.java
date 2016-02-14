@@ -3,10 +3,8 @@ package org.usfirst.frc.team4501.robot.commands;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import edu.wpi.first.wpilibj.command.WaitUntilCommand;
 
 /**
  *
@@ -18,13 +16,8 @@ public class AutonomousCommand extends CommandGroup {
 		requires(Robot.driveTrain);
 		driveTrain = Robot.driveTrain;
 		// Add Commands here:
-		//Actual Auto Command(Doesn't work)
 		addSequential(new WaitCommand(3));
 		addSequential(new DriveForward4Time(.5, 10.0));
-		addSequential(new WaitCommand(3));
-		addSequential(new ShiftDown());
-		addSequential(new WaitCommand(3));
-		addSequential(new ShiftUp());
 	
 		// e.g. addSequential(new Command1());
 		// addSequential(new Command2());

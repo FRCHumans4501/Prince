@@ -1,12 +1,10 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
-import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
-import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 
-import edu.wpi.first.wpilibj.ADXL362;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
@@ -20,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
 
-	public enum ShifterState{
+	protected enum ShifterState{
 		SF_HIGH, SF_LOW;
 	}
 	
@@ -30,12 +28,11 @@ public class DriveTrain extends Subsystem {
 	Talon leftTalon;
 	
 	DoubleSolenoid shifter;
-	ShifterState state; 
+	protected ShifterState state; 
 	
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-	ADXL362 rioAccel;
-	ADXRS450_Gyro rioGyro;
+	public ADIS16448_IMU rioGyro;
 	
     
     // Put methods for controlling this subsystem
@@ -48,18 +45,24 @@ public class DriveTrain extends Subsystem {
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
 		
-		this.rioGyro = new ADXRS450_Gyro();
+		this.rioGyro = new ADIS16448_IMU();
 		
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 		
-	
-    }
-    public void initDefaultCommand(){
-    	System.out.println("initDefaultCommand: Execute");
-    	setDefaultCommand(new DriveController());
+		System.out.println("DriveTrain.DriveTrain()");
     }
     
+    public void initDefaultCommand(){
+    	System.out.println("initDefaultCommand: Execute");
+    	setDefaultCommand(DriveController.instance);
+    }
+    
+    public void arcadeDrive(double forward, double reverse, double rotate){
+    	double movement = forward - reverse;
+    	drive.arcadeDrive(movement, rotate);
+    }
+
     public void arcadeDrive(double forward, double rotate){
     	drive.arcadeDrive(forward, rotate);
     }
@@ -67,19 +70,17 @@ public class DriveTrain extends Subsystem {
     public void tankDrive(double leftValue, double rightValue){
     	drive.tankDrive(leftValue, rightValue);
     }
+    
     public void stopMotors(){
     	leftTalon.set(0);
     	rightTalon.set(0);
-    }
-    public void initGyro(){
-    	rioGyro.calibrate();
-    	rioGyro.reset();
     }
     
     public void sensorReset(){
     	rioGyro.reset();
     	L_Encoder.reset();
     	R_Encoder.reset();
+    	System.out.println("DriveTrain.sensorReset()");
     }
     
 
@@ -104,7 +105,7 @@ public class DriveTrain extends Subsystem {
     	state = ShifterState.SF_LOW;
     }
     
-    public void set(ShifterState state) {
+    public void setGear(ShifterState state) {
     	switch (state) {
     	case SF_HIGH:
     		this.highGear();
@@ -115,12 +116,10 @@ public class DriveTrain extends Subsystem {
     		break;
     	}
     }
+    
     public ShifterState getState() {
     	return state;
-    }
-    
-   
-    
+    } 
 }
     
  

@@ -13,12 +13,13 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-	XboxController controller = new XboxController(0);
+	public XboxController controller = new XboxController(0);
 	Joystick shooter = new Joystick(1);
 	
 	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
 	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
 	Button ShooterStart = new JoystickButton(shooter, 1);
+	//Button ShooterFire = new JoystickButton(controller, controller.BUTTON_X);
 	
 	public OI() {
 		//Shifting
@@ -28,7 +29,7 @@ public class OI {
 		//Shooter
 		ShooterStart.whenPressed(new ShooterArcade());
 		ShooterStart.whenReleased(new ShooterIdle());
-		
+		//ShooterFire.whenPressed(new FireBall());
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	

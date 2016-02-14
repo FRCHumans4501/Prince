@@ -38,14 +38,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
-		driveTrain.initGyro();
-		System.out.println("robotInit");
 		autonomousCommand = new AutonomousCommand();
 
 		driveChooser = new SendableChooser();
 		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
-		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
+		driveChooser.addObject("Tank Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
+		
+		driveTrain.rioGyro.calibrate();
 	}
 
 	public void disabledPeriodic() {
@@ -53,6 +53,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+
+		driveTrain.rioGyro.reset();
+		System.out.println("Robot.autonomousInit()");
 		driveTrain.sensorReset();
 
 		// schedule the autonomous command (example)
@@ -73,15 +76,14 @@ public class Robot extends IterativeRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-
 		if (autonomousCommand != null)
 			autonomousCommand.cancel();
 
 		driveTrain.sensorReset();
-		
+
 		DriveController.driveMode = (DriveMode) driveChooser.getSelected();
 		System.out.println("Robot.teleopInit() mode = " + DriveController.driveMode);
-		new DriveController().start();
+		DriveController.instance.start();
 	}
 
 	/**
@@ -89,6 +91,7 @@ public class Robot extends IterativeRobot {
 	 * to reset subsystems before shutting down.
 	 */
 	public void disabledInit() {
+		driveTrain.sensorReset();
 		Scheduler.getInstance().add(new DriveIdle());
 	}
 

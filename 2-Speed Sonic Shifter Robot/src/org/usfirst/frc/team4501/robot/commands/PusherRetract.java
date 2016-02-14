@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ShiftDown extends Command {
+public class PusherRetract extends Command {
 
-    public ShiftDown() {
-    	requires(Robot.driveTrain);
+    public PusherRetract() {
+    	requires(Robot.shooter);
     }
 
     // Called just before this Command runs the first time
@@ -19,12 +19,11 @@ public class ShiftDown extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.lowGear();
+    	Robot.shooter.pusherRetract();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        System.out.println("ShiftDown: Finished");
         return true;
     }
 

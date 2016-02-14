@@ -2,6 +2,7 @@ package org.usfirst.frc.team4501.robot.commands;
 
 import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
+import org.usfirst.frc.team4501.robot.XboxController.Trigger;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveController extends Command {
+	
+	public static DriveController instance = new DriveController();
 	
 	public enum DriveMode{TANK, ARCADE};
 	
@@ -20,12 +23,12 @@ public class DriveController extends Command {
 	
     public DriveController() {
     	requires(Robot.driveTrain);
-    	driveTrain = Robot.driveTrain;
-    	oi = Robot.oi;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	driveTrain = Robot.driveTrain;
+    	oi = Robot.oi;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -34,8 +37,11 @@ public class DriveController extends Command {
     	switch(driveMode){
     	case ARCADE:
         	double rotate = oi.getLeftXboxX();
-        	double forward = oi.getLeftXboxY();
-        	driveTrain.arcadeDrive(forward, rotate);
+        	double forward = oi.controller.getRawTrigger(Trigger.RIGHT);
+        	double reverse = oi.controller.getRawTrigger(Trigger.LEFT);
+        	System.out.println("Right Joystick" + forward);
+        	System.out.println("Left Joystick" + reverse);
+        	driveTrain.arcadeDrive(forward, reverse, rotate);
         	break;
         	
     	case TANK:
