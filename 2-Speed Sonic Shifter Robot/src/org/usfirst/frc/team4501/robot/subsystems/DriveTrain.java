@@ -3,8 +3,6 @@ package org.usfirst.frc.team4501.robot.subsystems;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
@@ -32,7 +30,6 @@ public class DriveTrain extends Subsystem {
 	
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-	public ADIS16448_IMU rioGyro;
 	
     
     // Put methods for controlling this subsystem
@@ -44,8 +41,6 @@ public class DriveTrain extends Subsystem {
 		
 		this.drive = new RobotDrive(leftTalon, rightTalon);
 		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
-		
-		this.rioGyro = new ADIS16448_IMU();
 		
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
@@ -77,7 +72,6 @@ public class DriveTrain extends Subsystem {
     }
     
     public void sensorReset(){
-    	rioGyro.reset();
     	L_Encoder.reset();
     	R_Encoder.reset();
     	System.out.println("DriveTrain.sensorReset()");
@@ -85,9 +79,6 @@ public class DriveTrain extends Subsystem {
     
 
     public void getSensors(){
-    	long gyroAngle = Math.round(rioGyro.getAngle());
-    	SmartDashboard.putNumber("Gyro Angle", gyroAngle);
-    	SmartDashboard.putNumber("Gyro Rate", rioGyro.getRate());
     	SmartDashboard.putNumber("Right Encoder Distance", -this.R_Encoder.getDistance());
     	SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
     	SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());

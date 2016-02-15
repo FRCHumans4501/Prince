@@ -44,8 +44,6 @@ public class Robot extends IterativeRobot {
 		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
 		driveChooser.addObject("Tank Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
-		
-		driveTrain.rioGyro.calibrate();
 	}
 
 	public void disabledPeriodic() {
@@ -53,8 +51,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-
-		driveTrain.rioGyro.reset();
 		System.out.println("Robot.autonomousInit()");
 		driveTrain.sensorReset();
 
