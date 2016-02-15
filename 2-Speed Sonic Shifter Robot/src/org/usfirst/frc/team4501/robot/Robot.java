@@ -38,7 +38,6 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
-		driveTrain.initGyro();
 		System.out.println("robotInit");
 		autonomousCommand = new AutonomousCommand();
 
