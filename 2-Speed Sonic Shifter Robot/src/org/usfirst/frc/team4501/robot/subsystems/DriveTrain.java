@@ -45,7 +45,7 @@ public class DriveTrain extends Subsystem {
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 		
-		System.out.println("DriveTrain.DriveTrain()");
+		System.out.println("DriveTrain.DriveTrain() plz Halp");
     }
     
     public void initDefaultCommand(){

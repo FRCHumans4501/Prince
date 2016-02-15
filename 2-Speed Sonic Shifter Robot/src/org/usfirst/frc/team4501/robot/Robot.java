@@ -44,6 +44,7 @@ public class Robot extends IterativeRobot {
 		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
 		driveChooser.addObject("Tank Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
+		System.out.println("Kill me");
 	}
 
 	public void disabledPeriodic() {
