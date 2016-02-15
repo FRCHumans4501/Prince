@@ -36,18 +36,11 @@ public class DriveController extends Command {
 
     	switch(driveMode){
     	case ARCADE:
-        	double rotate = oi.getLeftXboxX();
-        	double forward = oi.controller.getRawTrigger(Trigger.RIGHT);
-        	double reverse = oi.controller.getRawTrigger(Trigger.LEFT);
-        	System.out.println("Right Joystick" + forward);
-        	System.out.println("Left Joystick" + reverse);
-        	driveTrain.arcadeDrive(forward, reverse, rotate);
+        	driveTrain.arcadeDrive(true);
         	break;
         	
     	case TANK:
-        	double leftForward = oi.getLeftXboxY();
-        	double rightForward = oi.getRightXboxY();
-    		driveTrain.tankDrive(leftForward, rightForward);
+    		driveTrain.tankDrive();
     		break;
     	}
     }
