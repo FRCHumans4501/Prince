@@ -4,7 +4,6 @@ import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.ShooterIdle;
-import org.usfirst.frc.team4501.robot.subsystems.DriveTrain.ShifterState;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -16,6 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shooter extends Subsystem {
+	
 	protected enum PusherState {
 		PS_EXT, PS_RET;
 	}

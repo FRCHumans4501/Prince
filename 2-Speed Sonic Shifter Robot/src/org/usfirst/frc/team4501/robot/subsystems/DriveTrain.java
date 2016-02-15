@@ -54,32 +54,14 @@ public class DriveTrain extends Subsystem {
 
 	public void initDefaultCommand() {
 		System.out.println("initDefaultCommand: Execute");
-		setDefaultCommand(DriveController.instance);
-	}
-
-	public void arcadeDrive(boolean triggerDrive) {
-		if (triggerDrive == true) {
-			double rotate = oi.getLeftXboxX();
-			double forwardTrigger = oi.controller.getRawTrigger(Trigger.RIGHT);
-			double reverseTrigger = oi.controller.getRawTrigger(Trigger.LEFT);
-			System.out.println("Right Joystick" + forwardTrigger);
-			System.out.println("Left Joystick" + reverseTrigger);
-			double movement = forwardTrigger - reverseTrigger;
-			drive.arcadeDrive(movement, rotate);
-		} else {
-			double forward = oi.getLeftXboxY();
-			double rotate = oi.getLeftXboxX();
-			drive.arcadeDrive(forward, rotate);
-		}
+		setDefaultCommand(new DriveController());
 	}
 
 	public void arcadeDrive(double forward, double rotate) {
 		drive.arcadeDrive(forward, rotate);
 	}
 
-	public void tankDrive() {
-		double leftValue = oi.getLeftXboxY();
-		double rightValue = oi.getRightXboxY();
+	public void tankDrive(double leftValue, double rightValue) {
 		drive.tankDrive(leftValue, rightValue);
 	}
 

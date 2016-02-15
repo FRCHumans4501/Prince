@@ -11,52 +11,58 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class DriveController extends Command {
-	
+
 	public static DriveController instance = new DriveController();
-	
-	public enum DriveMode{TANK, ARCADE};
-	
+
+	public enum DriveMode {
+		TANK, ARCADE
+	};
+
 	public static DriveMode driveMode;
-	
+
 	DriveTrain driveTrain;
 	OI oi;
-	
-    public DriveController() {
-    	requires(Robot.driveTrain);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    	driveTrain = Robot.driveTrain;
-    	oi = Robot.oi;
-    }
+	public DriveController() {
+		requires(Robot.driveTrain);
+		driveTrain = Robot.driveTrain;
+		oi = Robot.oi;
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    	switch(driveMode){
-    	case ARCADE:
-        	driveTrain.arcadeDrive(true);
-        	break;
-        	
-    	case TANK:
-    		driveTrain.tankDrive();
-    		break;
-    	}
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-        return false;
-    }
+		switch (driveMode) {
+		case ARCADE:
+			double rotate = oi.getLeftXboxX();
+			double forward = oi.getLeftXboxY();
+			driveTrain.arcadeDrive(forward, rotate);
+			break;
 
-    // Called once after isFinished returns true
-    protected void end() {
-    }
+		case TANK:
+			double leftForward = oi.getLeftXboxY();
+			double rightForward = oi.getRightXboxY();
+			driveTrain.tankDrive(leftForward, rightForward);
+			break;
+		}
+	}
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    	System.out.println("DriveController.interrupted()");
-    }
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		System.out.println("DriveController.interrupted()");
+	}
 }
