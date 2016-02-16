@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4501.robot;
 
+import org.usfirst.frc.team4501.robot.XboxController.Trigger;
 import org.usfirst.frc.team4501.robot.commands.*;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
@@ -18,6 +19,7 @@ public class OI {
 	
 	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
 	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
+	Button ShooterFire = new JoystickButton(controller, controller.BUTTON_X);
 	Button ShooterStart = new JoystickButton(shooter, 1);
 	
 	public OI() {
@@ -28,6 +30,7 @@ public class OI {
 		//Shooter
 		ShooterStart.whenPressed(new ShooterArcade());
 		ShooterStart.whenReleased(new ShooterIdle());
+		ShooterFire.whenPressed(new FireBall());
 		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
@@ -58,6 +61,14 @@ public class OI {
 	
 	public double getShooterThrottle() {
 		return shooter.getZ();
+	}
+	
+	public double getRightTrigger() {
+		return controller.getRawTrigger(Trigger.RIGHT);
+	}
+	
+	public double getLeftTrigger() {
+		return controller.getRawTrigger(Trigger.LEFT);
 	}
 	
     //// CREATING BUTTONS

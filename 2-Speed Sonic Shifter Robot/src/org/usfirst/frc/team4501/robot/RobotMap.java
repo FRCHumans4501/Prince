@@ -8,9 +8,12 @@ package org.usfirst.frc.team4501.robot;
  */
 public class RobotMap {
 
-	public static final int LEFTMOTOR = 0, RIGHTMOTOR = 1, LEFTSHOOTERMOTOR = 2, RIGHTSHOOTERMOTOR = 3;
+	public static final int LEFTMOTOR = 0, RIGHTMOTOR = 1;
 
-	public static final int SOLENOID_HIGHGEAR = 0, SOLENOID_LOWGEAR = 1;
+	public static final int LEFTCANMOTOR = 3, RIGHTCANMOTOR = 2;
+
+	public static final int SOLENOID_HIGHGEAR = 0, SOLENOID_LOWGEAR = 1, SOLENOID_SHOOTER_EX = 2,
+			SOLENOID_SHOOTER_RT = 3;
 
 	public static class Encoders {
 		public static final int L_A = 2, L_B = 3, // Left

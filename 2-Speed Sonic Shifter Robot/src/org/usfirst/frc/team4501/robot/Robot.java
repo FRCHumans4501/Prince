@@ -43,6 +43,7 @@ public class Robot extends IterativeRobot {
 
 		driveChooser = new SendableChooser();
 		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
+		driveChooser.addObject("Arcade w/ Joysticks Drive", DriveController.DriveMode.ARCADETRIGGER);
 		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
 	}
@@ -80,7 +81,7 @@ public class Robot extends IterativeRobot {
 		
 		DriveController.driveMode = (DriveMode) driveChooser.getSelected();
 		System.out.println("Robot.teleopInit() mode = " + DriveController.driveMode);
-		new DriveController().start();
+		DriveController.instance.start();
 	}
 
 	/**
