@@ -47,7 +47,7 @@ public class DriveTrain extends Subsystem {
 		this.rightTalon = new Talon(RobotMap.RIGHTMOTOR);
 
 		this.drive = new RobotDrive(leftTalon, rightTalon);
-		this.shifter = new DoubleSolenoid(RobotMap.SOLENOID_HIGHGEAR, RobotMap.SOLENOID_LOWGEAR);
+		this.shifter = new DoubleSolenoid(RobotMap.Solenoids.HIGHGEAR, RobotMap.Solenoids.LOWGEAR);
 
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
@@ -60,10 +60,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate) {
-		double movement = forwardTrigger - reverseTrigger;
+		double movement = reverseTrigger - forwardTrigger;
 		drive.arcadeDrive(movement, rotate);
-		System.out.println("Right Joystick" + forwardTrigger);
-		System.out.println("Left Joystick" + reverseTrigger);
+		//System.out.println("Right Joystick" + forwardTrigger);
+		//System.out.println("Left Joystick" + reverseTrigger);
 	}
 
 	public void arcadeDrive(double forward, double rotate) {
@@ -117,5 +117,4 @@ public class DriveTrain extends Subsystem {
 	public ShifterState getState() {
 		return state;
 	}
-
 }

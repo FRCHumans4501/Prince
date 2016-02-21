@@ -7,10 +7,14 @@ import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.ADXL345_I2C;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,6 +27,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	public static OI oi;
+	I2C i2c;
 
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
@@ -37,13 +42,14 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		oi = new OI();
+		i2c = new I2C(I2C.Port.kOnboard, 0x1E);
 
 		System.out.println("robotInit");
 		autonomousCommand = new AutonomousCommand();
 
 		driveChooser = new SendableChooser();
-		driveChooser.addDefault("Arcade Drive", DriveController.DriveMode.ARCADE);
-		driveChooser.addObject("Arcade w/ Joysticks Drive", DriveController.DriveMode.ARCADETRIGGER);
+		driveChooser.addDefault("Arcade w/ Trigger Drive", DriveController.DriveMode.ARCADETRIGGER);
+		driveChooser.addObject("Arcade Drive", DriveController.DriveMode.ARCADE);
 		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
 	}
@@ -78,7 +84,7 @@ public class Robot extends IterativeRobot {
 			autonomousCommand.cancel();
 
 		driveTrain.sensorReset();
-		
+		shooter.pusherRetract();
 		DriveController.driveMode = (DriveMode) driveChooser.getSelected();
 		System.out.println("Robot.teleopInit() mode = " + DriveController.driveMode);
 		DriveController.instance.start();

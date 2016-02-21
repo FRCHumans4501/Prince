@@ -16,10 +16,6 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Shooter extends Subsystem {
-
-	protected enum PusherState {
-		PS_EXT, PS_RET;
-	}
 	
 	RobotDrive shooter;
 	OI oi;
@@ -28,14 +24,15 @@ public class Shooter extends Subsystem {
 	CANTalon rShooterTalon;
 
 	DoubleSolenoid pusher;
-	protected PusherState state;
+	DoubleSolenoid vertical;
 
 	public Shooter() {
 		oi = Robot.oi;
 		this.lShooterTalon = new CANTalon(RobotMap.LEFTCANMOTOR);
 		this.rShooterTalon = new CANTalon(RobotMap.RIGHTCANMOTOR);
 		this.shooter = new RobotDrive(lShooterTalon, rShooterTalon);
-		this.pusher = new DoubleSolenoid(RobotMap.SOLENOID_SHOOTER_EX, RobotMap.SOLENOID_SHOOTER_RT);
+		this.pusher = new DoubleSolenoid(RobotMap.Solenoids.SHOOTER_EX, RobotMap.Solenoids.SHOOTER_RT);
+		this.vertical = new DoubleSolenoid(RobotMap.Solenoids.GOINGUP, RobotMap.Solenoids.GOINDOWN);
 	}
 
 	public void initDefaultCommand() {
@@ -43,8 +40,12 @@ public class Shooter extends Subsystem {
 	}
 
 	public void shooterArcade() {
-		double shooterSpeed = Robot.oi.getShooterThrottle();
-		shooter.arcadeDrive(shooterSpeed, 0);
+		
+		shooter.arcadeDrive(100, 0);
+	}
+	
+	public void intakeshooterArcade(){
+		shooter.arcadeDrive(-.75, 0);
 	}
 
 	public void shooterStop() {
@@ -54,27 +55,17 @@ public class Shooter extends Subsystem {
 
 	public void pusherExtend() {
 		pusher.set(Value.kForward);
-		state = PusherState.PS_EXT;
 	}
 
 	public void pusherRetract() {
 		pusher.set(Value.kReverse);
-		state = PusherState.PS_RET;
-	}
-
-	public void setPusher(PusherState state) {
-		switch (state) {
-		case PS_EXT:
-			this.pusherExtend();
-			break;
-
-		case PS_RET:
-			this.pusherRetract();
-			break;
-		}
 	}
 	
-	public PusherState getState(){
-		return state;
+	public void ShooterVerticalUp() {
+		vertical.set(Value.kForward);
+	}
+	
+	public void ShooterVerticalDown() {
+		vertical.set(Value.kReverse);
 	}
 }

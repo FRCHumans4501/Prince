@@ -12,8 +12,11 @@ public class RobotMap {
 
 	public static final int LEFTCANMOTOR = 3, RIGHTCANMOTOR = 2;
 
-	public static final int SOLENOID_HIGHGEAR = 0, SOLENOID_LOWGEAR = 1, SOLENOID_SHOOTER_EX = 2,
-			SOLENOID_SHOOTER_RT = 3;
+	public static class Solenoids {
+		public static final int HIGHGEAR = 2, LOWGEAR =
+				3, GOINGUP = 0, GOINDOWN = 1, SHOOTER_EX = 4,
+			SHOOTER_RT = 5;
+	}
 
 	public static class Encoders {
 		public static final int L_A = 2, L_B = 3, // Left

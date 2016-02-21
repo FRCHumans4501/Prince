@@ -14,14 +14,20 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	
+	public static final int TRIGGER = 1, BUTTON_2 = 2, BUTTON_3 = 3, BUTTON_4 = 4, BUTTON_5 = 5;
+	
 	XboxController controller = new XboxController(0);
 	Joystick shooter = new Joystick(1);
 	
 	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
 	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
-	Button ShooterFire = new JoystickButton(controller, controller.BUTTON_X);
-	Button ShooterStart = new JoystickButton(shooter, 1);
-	
+
+	Button ShooterStart = new JoystickButton(shooter, TRIGGER);
+	Button FullShoot = new JoystickButton(shooter, BUTTON_3);
+	Button PositionPickup = new JoystickButton(shooter, BUTTON_4);
+	Button PositionShoot = new JoystickButton(shooter, BUTTON_5); 
+	Button FullIntake = new JoystickButton(shooter, BUTTON_2);
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
@@ -29,8 +35,11 @@ public class OI {
 		
 		//Shooter
 		ShooterStart.whenPressed(new ShooterArcade());
-		ShooterStart.whenReleased(new ShooterIdle());
-		ShooterFire.whenPressed(new FireBall());
+		FullShoot.whenPressed(new FullShoot());
+		FullIntake.whileHeld(new FullIntake());
+		FullIntake.whenReleased(new ShooterStop());
+		PositionPickup.whenPressed(new PositionPickup());
+		PositionShoot.whenPressed(new PositionShoot());
 		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
@@ -51,7 +60,7 @@ public class OI {
 		return controller.getY(Hand.kRight);
 	}
 	
-	public double getShooterX() {
+	public double  getShooterX() {
 		return shooter.getX();
 	}
 	
