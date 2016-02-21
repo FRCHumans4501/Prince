@@ -22,19 +22,16 @@ public class OI {
 	
 	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
 	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
-
-	Button ShooterStart = new JoystickButton(shooter, TRIGGER);
 	Button FullShoot = new JoystickButton(shooter, BUTTON_3);
 	Button PositionPickup = new JoystickButton(shooter, BUTTON_4);
 	Button PositionShoot = new JoystickButton(shooter, BUTTON_5); 
-	Button FullIntake = new JoystickButton(shooter, BUTTON_2);
+	Button FullIntake = new JoystickButton(shooter, TRIGGER);
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 		
 		//Shooter
-		ShooterStart.whenPressed(new ShooterArcade());
 		FullShoot.whenPressed(new FullShoot());
 		FullIntake.whileHeld(new FullIntake());
 		FullIntake.whenReleased(new ShooterStop());

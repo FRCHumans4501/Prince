@@ -59,9 +59,11 @@ public class DriveTrain extends Subsystem {
 		setDefaultCommand(DriveController.instance);
 	}
 
-	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate) {
+	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate, double squaredRotate) {
 		double movement = reverseTrigger - forwardTrigger;
-		drive.arcadeDrive(movement, rotate);
+		squaredRotate = (squaredRotate * squaredRotate);
+		double bothJoysticks = squaredRotate - rotate;
+		drive.arcadeDrive(movement, bothJoysticks);
 		//System.out.println("Right Joystick" + forwardTrigger);
 		//System.out.println("Left Joystick" + reverseTrigger);
 	}

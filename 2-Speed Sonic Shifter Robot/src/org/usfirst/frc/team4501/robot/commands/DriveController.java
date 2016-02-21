@@ -45,7 +45,8 @@ public class DriveController extends Command {
 		case ARCADETRIGGER:
 			double forwardTrigger = Robot.oi.getRightTrigger();
 			double reverseTrigger = Robot.oi.getLeftTrigger();
-			driveTrain.arcadeTriggerDrive(forwardTrigger, reverseTrigger, rotate);
+			double squaredRotate = Robot.oi.getRightXboxX();
+			driveTrain.arcadeTriggerDrive(forwardTrigger, reverseTrigger, rotate, squaredRotate);
 			break;
 
 		case TANK:

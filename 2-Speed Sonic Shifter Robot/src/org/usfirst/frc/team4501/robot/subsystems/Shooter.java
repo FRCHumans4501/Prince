@@ -41,11 +41,11 @@ public class Shooter extends Subsystem {
 
 	public void shooterArcade() {
 		
-		shooter.arcadeDrive(100, 0);
+		shooter.arcadeDrive(1, 0);
 	}
 	
 	public void intakeshooterArcade(){
-		shooter.arcadeDrive(-.75, 0);
+		shooter.arcadeDrive(-1, 0);
 	}
 
 	public void shooterStop() {
