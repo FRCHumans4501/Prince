@@ -21,10 +21,6 @@ public class AutonomousCommand extends CommandGroup {
 		//Actual Auto Command(Doesn't work)
 		addSequential(new WaitCommand(3));
 		addSequential(new DriveForward4Time(.5, 10.0));
-		addSequential(new WaitCommand(3));
-		addSequential(new ShiftDown());
-		addSequential(new WaitCommand(3));
-		addSequential(new ShiftUp());
 	
 		// e.g. addSequential(new Command1());
 		// addSequential(new Command2());
