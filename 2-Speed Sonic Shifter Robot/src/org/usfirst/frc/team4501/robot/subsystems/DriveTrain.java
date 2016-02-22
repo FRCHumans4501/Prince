@@ -27,7 +27,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends Subsystem {
 
-	public enum ShifterState {
+	SensorValue[L_Encoder]=0;SensorValue[R_Encoder]=0;
+
+	enum ShifterState {
 		SF_HIGH, SF_LOW;
 	}
 
@@ -71,7 +73,7 @@ public class DriveTrain extends Subsystem {
 		}
 
 	}
-	
+
 	public void openFile() {
 		try {
 			bw.write(this.L_Encoder.getDistance() + "\t" + -this.R_Encoder.getDistance() + "\n");
@@ -79,7 +81,7 @@ public class DriveTrain extends Subsystem {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void closeFile() {
@@ -150,6 +152,30 @@ public class DriveTrain extends Subsystem {
 		case SF_LOW:
 			this.lowGear();
 			break;
+		}
+	}
+
+	public void driveStraight() {
+		int masterPower = 30;
+		int slavePower = 30;
+
+		int error = 0;
+
+		int Difference = 5;
+		
+		while (true) {
+			motor[this.leftTalon] = masterPower;
+			motor[this.rightTalon] = slavePower;
+
+			error = SensorValue[leftTalon] - SensorValue[righTalon];
+
+			slavePower += error / kp;
+
+			SensorValue[leftTalon] = 0;
+			SensorValue[rightTalon] = 0;
+
+			wait1Msec(100);
+
 		}
 	}
 
