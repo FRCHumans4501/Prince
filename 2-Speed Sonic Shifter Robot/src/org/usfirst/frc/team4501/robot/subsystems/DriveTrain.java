@@ -1,5 +1,11 @@
 package org.usfirst.frc.team4501.robot.subsystems;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
@@ -28,6 +34,8 @@ public class DriveTrain extends Subsystem {
 	RobotDrive drive;
 	OI oi;
 
+	BufferedWriter bw;
+
 	Talon rightTalon;
 	Talon leftTalon;
 
@@ -52,6 +60,35 @@ public class DriveTrain extends Subsystem {
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 
+		String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+		Path path = Paths.get("/home/lvuser/encoders." + timestamp + ".log");
+
+		try {
+			this.bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block :D
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void openFile() {
+		try {
+			bw.write(this.L_Encoder.getDistance() + "\t" + -this.R_Encoder.getDistance() + "\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void closeFile() {
+		try {
+			this.bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void initDefaultCommand() {
@@ -64,8 +101,8 @@ public class DriveTrain extends Subsystem {
 		squaredRotate = (squaredRotate * squaredRotate);
 		double bothJoysticks = squaredRotate - rotate;
 		drive.arcadeDrive(movement, bothJoysticks);
-		//System.out.println("Right Joystick" + forwardTrigger);
-		//System.out.println("Left Joystick" + reverseTrigger);
+		// System.out.println("Right Joystick" + forwardTrigger);
+		// System.out.println("Left Joystick" + reverseTrigger);
 	}
 
 	public void arcadeDrive(double forward, double rotate) {

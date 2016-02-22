@@ -19,8 +19,14 @@ public class AutonomousCommand extends CommandGroup {
 		driveTrain = Robot.driveTrain;
 		// Add Commands here:
 		//Actual Auto Command(Doesn't work)
+		addSequential(new PusherRetract());
 		addSequential(new WaitCommand(3));
 		addSequential(new DriveForward4Time(.5, 10.0));
+		addSequential(new PositionShoot());
+		addSequential(new WaitCommand(2));
+		//addSequential(new FindTarget()); This will be for when it tries to find the u-shaped target.
+		addSequential(new WaitCommand(2));
+		addSequential(new PusherExtend());
 	
 		// e.g. addSequential(new Command1());
 		// addSequential(new Command2());
