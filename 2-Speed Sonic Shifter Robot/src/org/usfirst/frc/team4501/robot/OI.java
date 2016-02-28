@@ -38,7 +38,6 @@ public class OI {
 		FullIntake.whenReleased(new ShooterStop());
 		PositionPickup.whenPressed(new PositionPickup());
 		PositionShoot.whenPressed(new PositionShoot());
-		
 		File.whenPressed(new GettingValues());
 		
 	}

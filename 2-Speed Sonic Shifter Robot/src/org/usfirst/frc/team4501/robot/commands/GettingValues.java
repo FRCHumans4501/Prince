@@ -12,7 +12,7 @@ public class GettingValues extends CommandGroup {
     
     public  GettingValues() {
     	requires(Robot.driveTrain);
-    	addSequential(new OpenFile());
+    	addParallel(new DriveForward4Time(1.0, 0, 10.0));
     	addSequential(new WaitCommand(10));
     	addSequential(new CloseFile());
         // Add Commands here:

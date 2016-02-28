@@ -10,23 +10,22 @@ import org.usfirst.frc.team4501.robot.OI;
 import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
-import org.usfirst.frc.team4501.robot.XboxController.Trigger;
-import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 
-import edu.wpi.first.wpilibj.ADXL362;
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
+//import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
 public class DriveTrain extends Subsystem {
-
 	public enum ShifterState {
 		SF_HIGH, SF_LOW;
 	}
@@ -44,7 +43,8 @@ public class DriveTrain extends Subsystem {
 
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-	ADXL362 rioAccel;
+	public ADIS16448_IMU rioGyro;
+	
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -59,7 +59,10 @@ public class DriveTrain extends Subsystem {
 
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
-
+	    
+		this.rioGyro = new ADIS16448_IMU();
+		
+ 
 		String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		Path path = Paths.get("/home/lvuser/encoders." + timestamp + ".log");
 
@@ -69,19 +72,10 @@ public class DriveTrain extends Subsystem {
 			// TODO Auto-generated catch block :D
 			e.printStackTrace();
 		}
-
-	}
-	
-	public void openFile() {
-		try {
-			bw.write(this.L_Encoder.getDistance() + "\t" + -this.R_Encoder.getDistance() + "\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-	}
+		rioGyro.calibrate();
 
+	}
 	public void closeFile() {
 		try {
 			this.bw.close();
@@ -98,11 +92,9 @@ public class DriveTrain extends Subsystem {
 
 	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate, double squaredRotate) {
 		double movement = reverseTrigger - forwardTrigger;
-		squaredRotate = (squaredRotate * squaredRotate);
+		squaredRotate *= 0.25;
 		double bothJoysticks = squaredRotate - rotate;
 		drive.arcadeDrive(movement, bothJoysticks);
-		// System.out.println("Right Joystick" + forwardTrigger);
-		// System.out.println("Left Joystick" + reverseTrigger);
 	}
 
 	public void arcadeDrive(double forward, double rotate) {
@@ -112,23 +104,58 @@ public class DriveTrain extends Subsystem {
 	public void tankDrive(double leftValue, double rightValue) {
 		drive.tankDrive(leftValue, rightValue);
 	}
-
+	
+	public double obtainYaw(){
+		return rioGyro.getYaw();
+	}
+	
+	public void correctionDriving(){
+		if (obtainYaw() > 0) {
+			if (obtainYaw() > 0 && obtainYaw() < 1.5) {
+				tankDrive(-0.23, -0.23);
+			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
+				tankDrive(0.15, -0.15);
+			} else if (obtainYaw() > 4) {
+				tankDrive(0.23, -0.23);
+			}
+		} else if (obtainYaw() < 0) {
+			if (obtainYaw() < 0 && obtainYaw() > -1.5) {
+				tankDrive(0.23, 0.23);
+			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
+				tankDrive(-0.15, 0.15);
+			} else if (obtainYaw() < -4) {
+				tankDrive(-0.23, 0.23);
+			}
+		}
+	}
+	
 	public void stopMotors() {
 		leftTalon.set(0);
 		rightTalon.set(0);
 	}
 
 	public void sensorReset() {
+		rioGyro.reset();
 		L_Encoder.reset();
 		R_Encoder.reset();
 	}
 
 	public void getSensors() {
+		SmartDashboard.putNumber("Gyro Angle", this.rioGyro.getAngle());
+		SmartDashboard.putNumber("Gyro Rate", this.rioGyro.getRate());
+		SmartDashboard.putNumber("Gyro Yaw", this.rioGyro.getYaw());
 		SmartDashboard.putNumber("Right Encoder Distance", -this.R_Encoder.getDistance());
 		SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());
 		SmartDashboard.putNumber("Left Encoder Rate", this.L_Encoder.getRate());
+		try {
+			bw.write(this.L_Encoder.getRate() + "\t" + -this.R_Encoder.getRate() + "\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		SmartDashboard.putNumber("Right Rotations", (-this.R_Encoder.getDistance() / 2085));
+		SmartDashboard.putNumber("Left Rotations", (this.L_Encoder.getDistance() / 2085));
 	}
 
 	public void highGear() {

@@ -2,19 +2,23 @@ package org.usfirst.frc.team4501.robot;
 
 import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
+import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveController.DriveMode;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
-import edu.wpi.first.wpilibj.ADXL345_I2C;
+//import edu.wpi.first.wpilibj.ADXL345_I2C;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.I2C.Port;
+//import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.networktables.NetworkTable;
+//import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,9 +36,13 @@ public class Robot extends IterativeRobot {
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
+	
+	
 
 	SendableChooser driveChooser;
 	Command autonomousCommand;
+	
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -52,6 +60,8 @@ public class Robot extends IterativeRobot {
 		driveChooser.addObject("Arcade Drive", DriveController.DriveMode.ARCADE);
 		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
+		
+		driveTrain.rioGyro.calibrate();
 	}
 
 	public void disabledPeriodic() {
@@ -59,10 +69,13 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
+		System.out.println("Robot.autonomousInit() mode = " + DriveController.driveMode);
+		DriveController.driveMode=DriveController.DriveMode.ARCADE;
 		driveTrain.sensorReset();
-
+        driveTrain.rioGyro.calibrate(); 
 		// schedule the autonomous command (example)
-		if (autonomousCommand != null) {
+		if ( autonomousCommand != null) {
+			DriveForward4Time.bearing=0;
 			autonomousCommand.start();
 		}
 	}
@@ -72,6 +85,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		//Scheduler.getInstance().add(new AutonomousCommand());
 	}
 
 	public void teleopInit() {
@@ -105,6 +120,8 @@ public class Robot extends IterativeRobot {
 		driveTrain.getSensors();
 		Scheduler.getInstance().run();
 	}
+	
+
 
 	/**
 	 * This function is called periodically during test mode

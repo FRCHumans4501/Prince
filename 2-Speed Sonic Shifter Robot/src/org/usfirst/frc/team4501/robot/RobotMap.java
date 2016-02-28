@@ -22,6 +22,11 @@ public class RobotMap {
 		public static final int L_A = 2, L_B = 3, // Left
 				R_A = 0, R_B = 1; // Right
 	}
+	
+	public static final int GYRO=6;
+	
+	
+		//public static final int GYROBASE=7;
 
 	// For example to map the left and right motors, you could define the
 	// following variables to use with your drivetrain subsystem.
