@@ -20,7 +20,7 @@ public class AutonomousCommand extends CommandGroup {
 		// Add Commands here:
 		//Actual Auto Command(Doesn't work)
 		addSequential(new PusherRetract());
-		addSequential(new DriveForward4Time(.5, 0, 5.0));
+		addSequential(new DriveForward4Time(0, 0, 30.0));
 		addParallel(new PositionShoot());
 		addSequential(new FullShoot());
 

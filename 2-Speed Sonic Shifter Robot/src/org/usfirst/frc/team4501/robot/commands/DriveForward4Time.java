@@ -18,8 +18,9 @@ public class DriveForward4Time extends Command {
 	double rotate;
 	double runTime;
 
-	int lastAngle = 9999;
-	public static int bearing = 0;
+	double lastAngle = 9999;
+	double bearing = 0;
+	double angle;
 
 	double Kp = 0.03;
 
@@ -48,18 +49,16 @@ public class DriveForward4Time extends Command {
 		SmartDashboard.putNumber("Run Time", timer.get());
 		// driveTrain.arcadeDrive(-speed, rotate);
 
-		int angle = (int) Math.round(driveTrain.rioGyro.getAngle());
-		if (Math.abs(angle - lastAngle) > 2) {
-			if (lastAngle != 9999) {
-				bearing = angle - lastAngle;
-			}
+		angle = driveTrain.rioGyro.getAngle();
+		if (lastAngle > 9000) {
 			lastAngle = angle;
-
 		}
+
+		bearing = angle - lastAngle;
 
 		driveTrain.arcadeDrive(-speed, Kp * bearing);
 
-		System.out.println("GYRO=" + driveTrain.rioGyro.getAngle() + " Angle=" + lastAngle + " Bearing = " + bearing);
+		System.out.println("Angle = " + lastAngle + " Bearing = " + bearing);
 
 	}
 
@@ -76,7 +75,7 @@ public class DriveForward4Time extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
-	
+
 	}
 
 	// Called when another command which requires one or more of the same

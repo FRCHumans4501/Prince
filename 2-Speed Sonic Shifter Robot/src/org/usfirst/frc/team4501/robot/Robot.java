@@ -36,13 +36,9 @@ public class Robot extends IterativeRobot {
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
-	
-	
 
 	SendableChooser driveChooser;
 	Command autonomousCommand;
-	
-	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -60,7 +56,7 @@ public class Robot extends IterativeRobot {
 		driveChooser.addObject("Arcade Drive", DriveController.DriveMode.ARCADE);
 		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
-		
+
 		driveTrain.rioGyro.calibrate();
 	}
 
@@ -70,12 +66,11 @@ public class Robot extends IterativeRobot {
 
 	public void autonomousInit() {
 		System.out.println("Robot.autonomousInit() mode = " + DriveController.driveMode);
-		DriveController.driveMode=DriveController.DriveMode.ARCADE;
+		DriveController.driveMode = DriveController.DriveMode.ARCADE;
 		driveTrain.sensorReset();
-        driveTrain.rioGyro.calibrate(); 
+		driveTrain.rioGyro.calibrate();
 		// schedule the autonomous command (example)
-		if ( autonomousCommand != null) {
-			DriveForward4Time.bearing=0;
+		if (autonomousCommand != null) {
 			autonomousCommand.start();
 		}
 	}
@@ -85,8 +80,8 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		
-		//Scheduler.getInstance().add(new AutonomousCommand());
+
+		// Scheduler.getInstance().add(new AutonomousCommand());
 	}
 
 	public void teleopInit() {
@@ -120,8 +115,6 @@ public class Robot extends IterativeRobot {
 		driveTrain.getSensors();
 		Scheduler.getInstance().run();
 	}
-	
-
 
 	/**
 	 * This function is called periodically during test mode
