@@ -8,8 +8,6 @@ import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-
 //import edu.wpi.first.wpilibj.ADXL345_I2C;
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.I2C;
@@ -38,7 +36,6 @@ public class Robot extends IterativeRobot {
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
-	public static final ADIS16448_IMU gyro = new ADIS16448_IMU();
 
 	SendableChooser driveChooser;
 	Command autonomousCommand;
