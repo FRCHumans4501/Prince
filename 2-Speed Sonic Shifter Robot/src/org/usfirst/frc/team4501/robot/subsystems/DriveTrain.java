@@ -60,7 +60,7 @@ public class DriveTrain extends Subsystem {
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 	    
-		this.rioGyro = new ADIS16448_IMU();
+		this.rioGyro = Robot.gyro;
 		
  
 		String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
