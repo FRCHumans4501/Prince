@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4501.robot;
 
-import org.usfirst.frc.team4501.robot.commands.AutonomousCommand;
+import org.usfirst.frc.team4501.robot.commands.MoveBackwardAutoCommand;
+import org.usfirst.frc.team4501.robot.commands.ShootAuto;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
 import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveController.DriveMode;
@@ -10,6 +11,7 @@ import org.usfirst.frc.team4501.robot.subsystems.Shooter;
 
 //import edu.wpi.first.wpilibj.ADXL345_I2C;
 import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.I2C;
 //import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,12 +34,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	public static OI oi;
 	I2C i2c;
+	CameraServer server;
 
 	// Subsystems
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
 
 	SendableChooser driveChooser;
+	SendableChooser autonomousChooser;
 	Command autonomousCommand;
 
 	/**
@@ -47,9 +51,19 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		i2c = new I2C(I2C.Port.kOnboard, 0x1E);
+		server = CameraServer.getInstance();
+		server.setQuality(50);
+		// the camera name (ex "cam0") can be found through the roborio web
+		// interface
+		server.startAutomaticCapture("cam0");
 
 		System.out.println("robotInit");
-		autonomousCommand = new AutonomousCommand();
+		
+		autonomousChooser = new SendableChooser();
+		autonomousChooser.addDefault("Do Nothing", new DriveIdle());
+		autonomousChooser.addObject("Drive Backwards", new MoveBackwardAutoCommand());
+		autonomousChooser.addObject("Shoot", new ShootAuto());
+		SmartDashboard.putData("Autonomous Chooser", autonomousChooser);
 
 		driveChooser = new SendableChooser();
 		driveChooser.addDefault("Arcade w/ Trigger Drive", DriveController.DriveMode.ARCADETRIGGER);
@@ -65,10 +79,9 @@ public class Robot extends IterativeRobot {
 	}
 
 	public void autonomousInit() {
-		System.out.println("Robot.autonomousInit() mode = " + DriveController.driveMode);
+		System.out.println("Robot.autonomousInit() mode = " + autonomousChooser.getSelected());
 		DriveController.driveMode = DriveController.DriveMode.ARCADE;
-		driveTrain.sensorReset();
-		driveTrain.rioGyro.calibrate();
+		autonomousCommand = (Command) autonomousChooser.getSelected();
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null) {
 			autonomousCommand.start();

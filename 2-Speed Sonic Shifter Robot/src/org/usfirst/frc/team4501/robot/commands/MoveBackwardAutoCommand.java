@@ -7,22 +7,21 @@ import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 //import edu.wpi.first.wpilibj.command.WaitCommand;
 //import edu.wpi.first.wpilibj.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  *
  */
-public class AutonomousCommand extends CommandGroup {
+public class MoveBackwardAutoCommand extends CommandGroup {
 	DriveTrain driveTrain;
 
-	public AutonomousCommand() {
+	public MoveBackwardAutoCommand() {
 		requires(Robot.driveTrain);
 		driveTrain = Robot.driveTrain;
-		// Add Commands here:
-		//Actual Auto Command(Doesn't work)
 		addSequential(new PusherRetract());
-		addSequential(new DriveForward4Time(0, 0, 30.0));
-		addParallel(new PositionShoot());
-		addSequential(new FullShoot());
+		addSequential(new PositionPickup());
+		addSequential(new WaitCommand(1));
+		addSequential(new DriveForward4Time(-1, 0, 2.0));
 
 		
 		// e.g. addSequential(new Command1());

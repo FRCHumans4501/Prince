@@ -33,8 +33,6 @@ public class DriveTrain extends Subsystem {
 	RobotDrive drive;
 	OI oi;
 
-	BufferedWriter bw;
-
 	Talon rightTalon;
 	Talon leftTalon;
 
@@ -61,30 +59,9 @@ public class DriveTrain extends Subsystem {
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 	    
 		this.rioGyro = new ADIS16448_IMU();
-		
- 
-		String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-		Path path = Paths.get("/home/lvuser/encoders." + timestamp + ".log");
-
-		try {
-			this.bw = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block :D
-			e.printStackTrace();
-		}
-		
 		rioGyro.calibrate();
 
 	}
-	public void closeFile() {
-		try {
-			this.bw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public void initDefaultCommand() {
 		System.out.println("initDefaultCommand: Execute");
 		setDefaultCommand(DriveController.instance);
@@ -92,8 +69,8 @@ public class DriveTrain extends Subsystem {
 
 	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate, double squaredRotate) {
 		double movement = reverseTrigger - forwardTrigger;
-		squaredRotate *= 0.25;
-		double bothJoysticks = squaredRotate - rotate;
+		squaredRotate *= 0.75;
+		double bothJoysticks = squaredRotate + rotate;
 		drive.arcadeDrive(movement, bothJoysticks);
 	}
 
@@ -148,12 +125,6 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());
 		SmartDashboard.putNumber("Left Encoder Rate", this.L_Encoder.getRate());
-		try {
-			bw.write(this.L_Encoder.getRate() + "\t" + -this.R_Encoder.getRate() + "\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		SmartDashboard.putNumber("Right Rotations", (-this.R_Encoder.getDistance() / 2085));
 		SmartDashboard.putNumber("Left Rotations", (this.L_Encoder.getDistance() / 2085));
 	}

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4501.robot.commands;
 
 import org.usfirst.frc.team4501.robot.Robot;
+import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
@@ -8,13 +9,18 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  *
  */
-public class GettingValues extends CommandGroup {
+public class ShootAuto extends CommandGroup {
+	DriveTrain driveTrain;
     
-    public  GettingValues() {
+    public  ShootAuto() {
     	requires(Robot.driveTrain);
-    	addParallel(new DriveForward4Time(1.0, 0, 10.0));
-    	addSequential(new WaitCommand(10));
-    	addSequential(new CloseFile());
+    	requires(Robot.shooter);
+    	driveTrain = Robot.driveTrain;
+    	
+    	addSequential(new PositionShoot());
+    	addSequential(new WaitCommand(1));
+    	addSequential(new FullShoot());
+    	
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

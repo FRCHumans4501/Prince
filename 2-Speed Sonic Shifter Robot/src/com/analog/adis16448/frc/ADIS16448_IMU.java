@@ -129,12 +129,17 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
 		readRegister(kRegPROD_ID); // dummy read
 
 		// Validate the part ID
-		if (readRegister(kRegPROD_ID) != 16448) {
+		
+		//This is a test to see if you actually need this line of code.
+		//We don't necessarily care if it is on port 14 or not so see if this works
+		//If this doesn't work uncomment this code
+		
+		/*if (readRegister(kRegPROD_ID) != 16448) {
 			m_spi.free();
 			m_spi = null;
 			DriverStation.reportError("could not find ADIS16448", false);
 			return;
-		}
+		}*/
 
 		// Set IMU internal decimation to 102.4 SPS
 		writeRegister(kRegSMPL_PRD, 769);

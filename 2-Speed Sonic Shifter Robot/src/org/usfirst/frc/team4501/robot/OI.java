@@ -22,11 +22,10 @@ public class OI {
 	
 	Button shiftHigh = new JoystickButton(controller, controller.BUTTON_A);
 	Button shiftLow = new JoystickButton(controller, controller.BUTTON_B);
+	Button FullIntake = new JoystickButton(shooter, TRIGGER);
 	Button FullShoot = new JoystickButton(shooter, BUTTON_3);
 	Button PositionPickup = new JoystickButton(shooter, BUTTON_4);
 	Button PositionShoot = new JoystickButton(shooter, BUTTON_5); 
-	Button FullIntake = new JoystickButton(shooter, TRIGGER);
-	Button File = new JoystickButton(controller, controller.BUTTON_Y);
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
@@ -38,7 +37,6 @@ public class OI {
 		FullIntake.whenReleased(new ShooterStop());
 		PositionPickup.whenPressed(new PositionPickup());
 		PositionShoot.whenPressed(new PositionShoot());
-		File.whenPressed(new GettingValues());
 		
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
