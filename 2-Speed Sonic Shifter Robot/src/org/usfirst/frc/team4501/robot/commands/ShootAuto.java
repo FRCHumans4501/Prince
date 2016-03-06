@@ -19,7 +19,7 @@ public class ShootAuto extends CommandGroup {
     	
     	addSequential(new PositionShoot());
     	addSequential(new WaitCommand(1));
-    	addSequential(new FullShoot());
+    	addSequential(new FullShoot(1));
     	
         // Add Commands here:
         // e.g. addSequential(new Command1());

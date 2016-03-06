@@ -40,8 +40,23 @@ public class Shooter extends Subsystem {
 	}
 
 	public void fullShooter() {
-		
 		shooter.arcadeDrive(1, 0);
+	}
+	
+	public void ninetyFiveShooter() {
+		shooter.arcadeDrive(0.95, 0);
+	}
+	
+	public void ninetyPercentShooter(){
+		shooter.arcadeDrive(0.9, 0);
+	}
+	
+	public void eightyFivePercentShooter() {
+		shooter.arcadeDrive(0.85, 0);
+	}
+	
+	public void eightyPercentShooter() {
+		shooter.arcadeDrive(0.8, 0);
 	}
 	
 	public void fullIntakeShooter(){

@@ -21,7 +21,7 @@ public class MoveBackwardAutoCommand extends CommandGroup {
 		addSequential(new PusherRetract());
 		addSequential(new PositionPickup());
 		addSequential(new WaitCommand(1));
-		addSequential(new DriveForward4Time(-1, 0, 2.0));
+		addSequential(new DriveForward4Time(-0.70, 0, 6.0));
 
 		
 		// e.g. addSequential(new Command1());

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
 	
-	public static final int TRIGGER = 1, BUTTON_2 = 2, BUTTON_3 = 3, BUTTON_4 = 4, BUTTON_5 = 5;
+	public static final int TRIGGER = 1, BUTTON_2 = 2, BUTTON_3 = 3, BUTTON_4 = 4, BUTTON_5 = 5, BUTTON_6 = 6, BUTTON_7 = 7, BUTTON_8 = 8, BUTTON_9 = 9;
 	
 	XboxController controller = new XboxController(0);
 	Joystick shooter = new Joystick(1);
@@ -25,19 +25,29 @@ public class OI {
 	Button FullIntake = new JoystickButton(shooter, TRIGGER);
 	Button FullShoot = new JoystickButton(shooter, BUTTON_3);
 	Button PositionPickup = new JoystickButton(shooter, BUTTON_4);
-	Button PositionShoot = new JoystickButton(shooter, BUTTON_5); 
+	Button PositionShoot = new JoystickButton(shooter, BUTTON_5);
+
+	Button NinetyFivePercentShoot = new JoystickButton(shooter, BUTTON_9);
+	Button NinetyPercentShoot = new JoystickButton(shooter, BUTTON_8);
+	Button EightyFivePercentShoot = new JoystickButton(shooter, BUTTON_7);
+	Button EightyPercentShoot = new JoystickButton(shooter, BUTTON_6);
 	public OI() {
 		//Shifting
 		shiftHigh.whenPressed(new ShiftUp());
 		shiftLow.whenPressed(new ShiftDown());
 		
 		//Shooter
-		FullShoot.whenPressed(new FullShoot());
+		FullShoot.whenPressed(new FullShoot(1));
 		FullIntake.whileHeld(new FullIntake());
 		FullIntake.whenReleased(new ShooterStop());
 		PositionPickup.whenPressed(new PositionPickup());
 		PositionShoot.whenPressed(new PositionShoot());
 		
+		//Extra Stuff (Prob TB Removed)
+		NinetyFivePercentShoot.whenPressed(new FullShoot(2));
+		NinetyPercentShoot.whenPressed(new FullShoot(3));
+		EightyFivePercentShoot.whenPressed(new FullShoot(4));
+		EightyPercentShoot.whenPressed(new FullShoot(5));
 	}
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 	

@@ -69,7 +69,7 @@ public class DriveTrain extends Subsystem {
 
 	public void arcadeTriggerDrive(double forwardTrigger, double reverseTrigger, double rotate, double squaredRotate) {
 		double movement = reverseTrigger - forwardTrigger;
-		squaredRotate *= 0.75;
+		squaredRotate *= 0.50;
 		double bothJoysticks = squaredRotate + rotate;
 		drive.arcadeDrive(movement, bothJoysticks);
 	}
