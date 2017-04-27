@@ -5,11 +5,10 @@ import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.ShooterIdle;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.RobotDrive;
-//import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -20,16 +19,16 @@ public class Shooter extends Subsystem {
 	RobotDrive shooter;
 	OI oi;
 
-	CANTalon lShooterTalon;
-	CANTalon rShooterTalon;
+    Talon lShooterTalon;
+	Talon rShooterTalon;
 
 	DoubleSolenoid pusher;
 	DoubleSolenoid vertical;
 
 	public Shooter() {
 		oi = Robot.oi;
-		this.lShooterTalon = new CANTalon(RobotMap.LEFTCANMOTOR);
-		this.rShooterTalon = new CANTalon(RobotMap.RIGHTCANMOTOR);
+		this.lShooterTalon = new Talon(RobotMap.LEFTSHOOTERMOTOR);
+		this.rShooterTalon = new Talon(RobotMap.RIGHTSHOOTERMOTOR);
 		this.shooter = new RobotDrive(lShooterTalon, rShooterTalon);
 		this.pusher = new DoubleSolenoid(RobotMap.Solenoids.SHOOTER_EX, RobotMap.Solenoids.SHOOTER_RT);
 		this.vertical = new DoubleSolenoid(RobotMap.Solenoids.GOINGUP, RobotMap.Solenoids.GOINDOWN);

@@ -10,7 +10,7 @@ public class RobotMap {
 
 	public static final int LEFTMOTOR = 0, RIGHTMOTOR = 1;
 
-	public static final int LEFTCANMOTOR = 3, RIGHTCANMOTOR = 2;
+	public static final int LEFTSHOOTERMOTOR = 3, RIGHTSHOOTERMOTOR = 2;
 
 	public static class Solenoids {
 		public static final int HIGHGEAR = 2, LOWGEAR =
@@ -24,6 +24,7 @@ public class RobotMap {
 	}
 	
 	public static final int GYRO=6;
+	
 	
 	
 		//public static final int GYROBASE=7;

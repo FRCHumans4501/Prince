@@ -3,7 +3,6 @@ package org.usfirst.frc.team4501.robot;
 import org.usfirst.frc.team4501.robot.commands.MoveBackwardAutoCommand;
 import org.usfirst.frc.team4501.robot.commands.ShootAuto;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
-import org.usfirst.frc.team4501.robot.commands.DriveForward4Time;
 import org.usfirst.frc.team4501.robot.commands.DriveController.DriveMode;
 import org.usfirst.frc.team4501.robot.commands.DriveIdle;
 import org.usfirst.frc.team4501.robot.subsystems.DriveTrain;
@@ -52,10 +51,8 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		i2c = new I2C(I2C.Port.kOnboard, 0x1E);
 		server = CameraServer.getInstance();
-		server.setQuality(50);
 		// the camera name (ex "cam0") can be found through the roborio web
 		// interface
-		server.startAutomaticCapture("cam0");
 
 		System.out.println("robotInit");
 		
@@ -71,7 +68,6 @@ public class Robot extends IterativeRobot {
 		driveChooser.addObject("Seperate Drive", DriveController.DriveMode.TANK);
 		SmartDashboard.putData("Drive Chooser", driveChooser);
 
-		driveTrain.rioGyro.calibrate();
 	}
 
 	public void disabledPeriodic() {

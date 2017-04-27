@@ -63,27 +63,12 @@ public class XboxController extends Joystick {
 		}
 	}
 	
-	@Override
-	public double getX(Hand hand) {
-		return processDeadzone(this.getCurrrentCoordiantes(hand), DEADZONE).x;
-	}
-	
-	@Override
-	public double getY(Hand hand) {
-		return processDeadzone(this.getCurrrentCoordiantes(hand), DEADZONE).y;
-	}
-	
 	public double getRawTrigger(Trigger trigger) {
 		if (trigger == Trigger.LEFT) {
 			return this.getRawAxis(TRIGGER_L);
 		} else {
 			return this.getRawAxis(TRIGGER_R);
 		}
-	}
-	
-	@Override
-	public void setRumble(RumbleType type, float value) {
-		super.setRumble(type, value);
 	}
 
 }
