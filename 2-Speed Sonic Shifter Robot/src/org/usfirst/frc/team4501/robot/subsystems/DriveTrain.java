@@ -11,7 +11,6 @@ import org.usfirst.frc.team4501.robot.Robot;
 import org.usfirst.frc.team4501.robot.RobotMap;
 import org.usfirst.frc.team4501.robot.commands.DriveController;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -41,7 +40,6 @@ public class DriveTrain extends Subsystem {
 
 	Encoder L_Encoder;
 	Encoder R_Encoder;
-	public ADIS16448_IMU rioGyro;
 	
 
 	// Put methods for controlling this subsystem
@@ -58,8 +56,6 @@ public class DriveTrain extends Subsystem {
 		this.L_Encoder = new Encoder(RobotMap.Encoders.L_A, RobotMap.Encoders.L_B);
 		this.R_Encoder = new Encoder(RobotMap.Encoders.R_A, RobotMap.Encoders.R_B);
 	    
-		this.rioGyro = new ADIS16448_IMU();
-		rioGyro.calibrate();
 
 	}
 	public void initDefaultCommand() {
@@ -82,45 +78,17 @@ public class DriveTrain extends Subsystem {
 		drive.tankDrive(leftValue, rightValue);
 	}
 	
-	public double obtainYaw(){
-		return rioGyro.getYaw();
-	}
-	
-	public void correctionDriving(){
-		if (obtainYaw() > 0) {
-			if (obtainYaw() > 0 && obtainYaw() < 1.5) {
-				tankDrive(-0.23, -0.23);
-			} else if (obtainYaw() > 1.5 && obtainYaw() < 4) {
-				tankDrive(0.15, -0.15);
-			} else if (obtainYaw() > 4) {
-				tankDrive(0.23, -0.23);
-			}
-		} else if (obtainYaw() < 0) {
-			if (obtainYaw() < 0 && obtainYaw() > -1.5) {
-				tankDrive(0.23, 0.23);
-			} else if (obtainYaw() < -1.5 && obtainYaw() > -4) {
-				tankDrive(-0.15, 0.15);
-			} else if (obtainYaw() < -4) {
-				tankDrive(-0.23, 0.23);
-			}
-		}
-	}
-	
 	public void stopMotors() {
 		leftTalon.set(0);
 		rightTalon.set(0);
 	}
 
 	public void sensorReset() {
-		rioGyro.reset();
 		L_Encoder.reset();
 		R_Encoder.reset();
 	}
 
 	public void getSensors() {
-		SmartDashboard.putNumber("Gyro Angle", this.rioGyro.getAngle());
-		SmartDashboard.putNumber("Gyro Rate", this.rioGyro.getRate());
-		SmartDashboard.putNumber("Gyro Yaw", this.rioGyro.getYaw());
 		SmartDashboard.putNumber("Right Encoder Distance", -this.R_Encoder.getDistance());
 		SmartDashboard.putNumber("Left Encoder Distance", this.L_Encoder.getDistance());
 		SmartDashboard.putNumber("Right Encoder Rate", -this.R_Encoder.getRate());
